@@ -1,0 +1,64 @@
+options:
+  shopname: "Spawner Shop"
+  openmessage: '&aOpening Spawner Shop'
+  signsuccess: '&3You have sucessfully created a SpawnerShop sign!'
+  inventorysize: 27
+  nopermission: '&aYou do not have permission to do that!'
+  cooldown: 10
+  cooldownmessage: '&aYou can not use that command yet!'
+  currencysign: $
+  reloadsuccess: '&aYou have successfully reloaded SpawnerShop!'
+  prefix: '&7[&eSpawnerShop&7]'
+  nomoney: '&aYou do not have enough funds!'
+prices:
+  enderman: 100000
+  blaze: 100000
+  skeleton: 100000
+  zombie: 100000
+  creeper: 100000
+  cavespider: 100000
+  spider: 100000
+  wolf: 100000
+  chicken: 100000
+  cow: 100000
+  pig: 100000
+  ocelot: 100000
+  mushroom: 100000
+  sheep: 100000
+  bat: 100000
+  rabbit: 100000
+  squid: 100000
+  villager: 100000
+  zombiepig: 100000
+  silverfish: 100000
+  irongolem: 100000
+  slime: 100000
+  horse: 100000
+  witch: 100000
+  magmacube: 100000
+spawners:
+  enderman: true
+  blaze: true
+  skeleton: true
+  zombie: true
+  creeper: true
+  cavespider: true
+  spider: true
+  wolf: true
+  chicken: true
+  cow: true
+  pig: true
+  ocelot: true
+  mushroom: true
+  sheep: true
+  bat: true
+  rabbit: true
+  squid: true
+  villager: true
+  zombiepigman: true
+  silverfish: true
+  irongolem: true
+  slime: true
+  horse: true
+  witch: true
+  magmacube: true

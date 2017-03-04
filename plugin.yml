@@ -1,0 +1,21 @@
+name: SpawnerShop
+version: 3.3
+main: me.dapkin.sshop.ShopPlugin
+depend: [Vault]
+commands:
+  spawners:
+    description: This is the main command!
+    usage: /<command> 
+permissions:
+  spawnershop.use:
+    description: Gives access to the command /spawners
+    default: true
+  spawnershop.reload:
+    description: Gives access to /spawners reload which allows you to reload the config.
+    default: false
+  spawnershop.signs.use:
+    description: Gives access to use the SpawnerShop signs!
+    default: true
+  spawnershop.signs.create:
+    description: Gives access to create a SpawnerShop sign!
+    default: false
