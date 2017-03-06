@@ -1,6 +1,5 @@
 package me.dapkin.sshop;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
@@ -15,19 +14,19 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 public class ShopSigns implements Listener {
-    public final ShopPlugin plugin;
+    private SpawnerShop plugin;
 
-    public ShopSigns(ShopPlugin plugin) {
+    ShopSigns(SpawnerShop plugin) {
         this.plugin = plugin;
     }
 
-    public boolean isInt(String s) {
+    private boolean isInt(String s) {
         try {
             Integer.parseInt(s);
             return true;
         } catch (NumberFormatException ex) {
+            return false;
         }
-        return false;
     }
 
     @EventHandler
@@ -349,209 +348,19 @@ public class ShopSigns implements Listener {
                     String price = sign.getLine(3);
                     price = price.replace(plugin.config.getString("options.currencysign"), "");
                     price = price.replace(",", "");
-                    int rprice = Integer.parseInt(price);
+                    int realPrice = Integer.parseInt(price);
                     if (sign.getLine(1).equalsIgnoreCase("Buy")) {
-                        if (line3.equalsIgnoreCase("Enderman")) {
-                            if (ShopPlugin.economy.getBalance(p) >= rprice) {
-                                ShopPlugin.economy.withdrawPlayer(p, rprice);
-                                plugin.giveSpawner(p, "Enderman");
-                                p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(rprice) + " has been taken from your account.");
-                            } else {
-                                p.sendMessage(error);
-                            }
-                        } else if (line3.equalsIgnoreCase("Blaze")) {
-                            if (ShopPlugin.economy.getBalance(p) >= rprice) {
-                                ShopPlugin.economy.withdrawPlayer(p, rprice);
-                                plugin.giveSpawner(p, "Blaze");
-                                p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(rprice) + " has been taken from your account.");
-                            } else {
-                                p.sendMessage(error);
-                            }
-                        } else if (line3.equalsIgnoreCase("Skeleton")) {
-                            if (ShopPlugin.economy.getBalance(p) >= rprice) {
-                                ShopPlugin.economy.withdrawPlayer(p, rprice);
-                                plugin.giveSpawner(p, "Skeleton");
-                                p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(rprice) + " has been taken from your account.");
-                            } else {
-                                p.sendMessage(error);
-                            }
-                        } else if (line3.equalsIgnoreCase("Zombie")) {
-                            if (ShopPlugin.economy.getBalance(p) >= rprice) {
-                                ShopPlugin.economy.withdrawPlayer(p, rprice);
-                                plugin.giveSpawner(p, "Zombie");
-                                p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(rprice) + " has been taken from your account.");
-                            } else {
-                                p.sendMessage(error);
-                            }
-                        } else if (line3.equalsIgnoreCase("Creeper")) {
-                            if (ShopPlugin.economy.getBalance(p) >= rprice) {
-                                ShopPlugin.economy.withdrawPlayer(p, rprice);
-                                plugin.giveSpawner(p, "Creeper");
-                                p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(rprice) + " has been taken from your account.");
-                            } else {
-                                p.sendMessage(error);
-                            }
-                        } else if (line3.equalsIgnoreCase("Cave Spider")) {
-                            if (ShopPlugin.economy.getBalance(p) >= rprice) {
-                                ShopPlugin.economy.withdrawPlayer(p, rprice);
-                                plugin.giveSpawner(p, "Cave Spider");
-                                p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(rprice) + " has been taken from your account.");
-                            } else {
-                                p.sendMessage(error);
-                            }
-                        } else if (line3.equalsIgnoreCase("Spider")) {
-                            if (ShopPlugin.economy.getBalance(p) >= rprice) {
-                                ShopPlugin.economy.withdrawPlayer(p, rprice);
-                                plugin.giveSpawner(p, "Spider");
-                                p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(rprice) + " has been taken from your account.");
-                            } else {
-                                p.sendMessage(error);
-                            }
-                        } else if (line3.equalsIgnoreCase("Wolf")) {
-                            if (ShopPlugin.economy.getBalance(p) >= rprice) {
-                                ShopPlugin.economy.withdrawPlayer(p, rprice);
-                                plugin.giveSpawner(p, "Wolf");
-                                p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(rprice) + " has been taken from your account.");
-                            } else {
-                                p.sendMessage(error);
-                            }
-                        } else if (line3.equalsIgnoreCase("Chicken")) {
-                            if (ShopPlugin.economy.getBalance(p) >= rprice) {
-                                ShopPlugin.economy.withdrawPlayer(p, plugin.getConfig().getInt("prices.chicken"));
-                                plugin.giveSpawner(p, "Chicken");
-                                p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(rprice) + " has been taken from your account.");
-                            } else {
-                                p.sendMessage(error);
-                            }
-                        } else if (line3.equalsIgnoreCase("Cow")) {
-                            if (ShopPlugin.economy.getBalance(p) >= rprice) {
-                                ShopPlugin.economy.withdrawPlayer(p, rprice);
-                                plugin.giveSpawner(p, "Cow");
-                                p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(rprice) + " has been taken from your account.");
-                            } else {
-                                p.sendMessage(error);
-                            }
-                        } else if (line3.equalsIgnoreCase("Pig")) {
-                            if (ShopPlugin.economy.getBalance(p) >= rprice) {
-                                ShopPlugin.economy.withdrawPlayer(p, rprice);
-                                plugin.giveSpawner(p, "Pig");
-                                p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(rprice) + " has been taken from your account.");
-                            } else {
-                                p.sendMessage(error);
-                            }
-                        } else if (line3.equalsIgnoreCase("Ocelot")) {
-                            if (ShopPlugin.economy.getBalance(p) >= rprice) {
-                                ShopPlugin.economy.withdrawPlayer(p, rprice);
-                                plugin.giveSpawner(p, "Ocelot");
-                                p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(rprice) + " has been taken from your account.");
-                            } else {
-                                p.sendMessage(error);
-                            }
-                        } else if (line3.equalsIgnoreCase("Mushroom Cow")) {
-                            if (ShopPlugin.economy.getBalance(p) >= rprice) {
-                                ShopPlugin.economy.withdrawPlayer(p, rprice);
-                                plugin.giveSpawner(p, "Mushroom Cow");
-                                p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(rprice) + " has been taken from your account.");
-                            } else {
-                                p.sendMessage(error);
-                            }
-                        } else if (line3.equalsIgnoreCase("Sheep")) {
-                            if (ShopPlugin.economy.getBalance(p) >= rprice) {
-                                ShopPlugin.economy.withdrawPlayer(p, rprice);
-                                plugin.giveSpawner(p, "Sheep");
-                                p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(rprice) + " has been taken from your account.");
-                            } else {
-                                p.sendMessage(error);
-                            }
-                        } else if (line3.equalsIgnoreCase("Bat")) {
-                            if (ShopPlugin.economy.getBalance(p) >= rprice) {
-                                ShopPlugin.economy.withdrawPlayer(p, rprice);
-                                plugin.giveSpawner(p, "Bat");
-                                p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(rprice) + " has been taken from your account.");
-                            } else {
-                                p.sendMessage(error);
-                            }
-                        } else if (line3.equalsIgnoreCase("Rabbit")) {
-                            if (ShopPlugin.economy.getBalance(p) >= rprice) {
-                                ShopPlugin.economy.withdrawPlayer(p, rprice);
-                                plugin.giveSpawner(p, "Rabbit");
-                                p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(rprice) + " has been taken from your account.");
-                            } else {
-                                p.sendMessage(error);
-                            }
-                        } else if (line3.equalsIgnoreCase("Squid")) {
-                            if (ShopPlugin.economy.getBalance(p) >= rprice) {
-                                ShopPlugin.economy.withdrawPlayer(p, rprice);
-                                plugin.giveSpawner(p, "Squid");
-                                p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(rprice) + " has been taken from your account.");
-                            } else {
-                                p.sendMessage(error);
-                            }
-                        } else if (line3.equalsIgnoreCase("Villager")) {
-                            if (ShopPlugin.economy.getBalance(p) >= rprice) {
-                                ShopPlugin.economy.withdrawPlayer(p, rprice);
-                                plugin.giveSpawner(p, "Villager");
-                                p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(rprice) + " has been taken from your account.");
-                            } else {
-                                p.sendMessage(error);
-                            }
-                        } else if (line3.equalsIgnoreCase("Zombie Pigman")) {
-                            if (ShopPlugin.economy.getBalance(p) >= rprice) {
-                                ShopPlugin.economy.withdrawPlayer(p, rprice);
-                                plugin.giveSpawner(p, "Zombie Pigman");
-                                p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(rprice) + " has been taken from your account.");
-                            } else {
-                                p.sendMessage(error);
-                            }
-                        } else if (line3.equalsIgnoreCase("Silverfish")) {
-                            if (ShopPlugin.economy.getBalance(p) >= rprice) {
-                                ShopPlugin.economy.withdrawPlayer(p, rprice);
-                                plugin.giveSpawner(p, "Silverfish");
-                                p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(rprice) + " has been taken from your account.");
-                            } else {
-                                p.sendMessage(error);
-                            }
-                        } else if (line3.equalsIgnoreCase("Iron Golem")) {
-                            if (ShopPlugin.economy.getBalance(p) >= rprice) {
-                                ShopPlugin.economy.withdrawPlayer(p, rprice);
-                                plugin.giveSpawner(p, "Iron Golem");
-                                p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(rprice) + " has been taken from your account.");
-                            } else {
-                                p.sendMessage(error);
-                            }
-                        } else if (line3.equalsIgnoreCase("Slime")) {
-                            if (ShopPlugin.economy.getBalance(p) >= rprice) {
-                                ShopPlugin.economy.withdrawPlayer(p, rprice);
-                                plugin.giveSpawner(p, "Slime");
-                                p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(rprice) + " has been taken from your account.");
-                            } else {
-                                p.sendMessage(error);
-                            }
-                        } else if (line3.equalsIgnoreCase("Horse")) {
-                            if (ShopPlugin.economy.getBalance(p) >= rprice) {
-                                ShopPlugin.economy.withdrawPlayer(p, rprice);
-                                plugin.giveSpawner(p, "Horse");
-                                p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(rprice) + " has been taken from your account.");
-                            } else {
-                                p.sendMessage(error);
-                            }
-                        } else if (line3.equalsIgnoreCase("Witch")) {
-                            if (ShopPlugin.economy.getBalance(p) >= rprice) {
-                                ShopPlugin.economy.withdrawPlayer(p, rprice);
-                                plugin.giveSpawner(p, "Witch");
-                                p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(rprice) + " has been taken from your account.");
-                            } else {
-                                p.sendMessage(error);
-                            }
-                        } else if (line3.equalsIgnoreCase("Magma Cube")) {
-                            if (ShopPlugin.economy.getBalance(p) >= rprice) {
-                                ShopPlugin.economy.withdrawPlayer(p, rprice);
-                                plugin.giveSpawner(p, "MagmaCube");
-                                p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(rprice) + " has been taken from your account.");
-                            } else {
-                                p.sendMessage(error);
-                            }
+                        if(SpawnerShop.economy.getBalance(p) >= realPrice) {
+                            SpawnerShop.economy.withdrawPlayer(p, realPrice);
+                            plugin.giveSpawner(p, line3);
+                            p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(realPrice) + " has been taken from your account.");
+                        }else {
+                            p.sendMessage(error);
                         }
+                    }else {
+                        SpawnerShop.economy.depositPlayer(p, realPrice);
+                        plugin.giveSpawner(p, line3);
+                        p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(realPrice) + " has been deposited into your account.");
                     }
                 } else {
                     p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix")) + " " + ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.nopermission")));

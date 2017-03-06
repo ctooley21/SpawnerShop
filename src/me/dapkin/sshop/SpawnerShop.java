@@ -1,5 +1,6 @@
 package me.dapkin.sshop;
 
+import com.mysql.fabric.xmlrpc.base.Array;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -23,10 +24,9 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.logging.Level;
 
-public class ShopPlugin extends JavaPlugin {
-    public static Economy economy = null;
-    public Inventory spawnerInv = Bukkit.createInventory(null, getConfig().getInt("options.inventorysize"), getConfig().getString("options.shopname"));
-    ShopPlugin plugin;
+public class SpawnerShop extends JavaPlugin {
+    static Economy economy = null;
+    Inventory spawnerInv = Bukkit.createInventory(null, getConfig().getInt("options.inventorysize"), getConfig().getString("options.shopname"));
     HashMap<String, Long> cooldown = new HashMap<String, Long>();
     FileConfiguration config = getConfig();
 
@@ -52,13 +52,13 @@ public class ShopPlugin extends JavaPlugin {
     }
 
     public void onDisable() {
-        plugin = null;
+
     }
 
     private boolean setupEconomy() {
         RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(Economy.class);
         if (economyProvider != null) {
-            economy = (Economy) economyProvider.getProvider();
+            economy = economyProvider.getProvider();
         }
         return economy != null;
     }

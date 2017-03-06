@@ -1,6 +1,5 @@
 package me.dapkin.sshop;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -9,9 +8,9 @@ import org.bukkit.entity.Player;
 
 public class Commands implements CommandExecutor {
 
-    public ShopPlugin plugin;
+    public SpawnerShop plugin;
 
-    public Commands(ShopPlugin plugin) {
+    public Commands(SpawnerShop plugin) {
         this.plugin = plugin;
     }
 
