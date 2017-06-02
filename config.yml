@@ -16,99 +16,99 @@ spawners:
     enabled: true
     price: 100000
     data-value: 58
-  blaze: true
+  blaze:
     enabled: true
     price: 100000
     data-value: 61
-  skeleton: true
+  skeleton:
     enabled: true
     price: 100000
     data-value: 51
-  zombie: true
+  zombie:
     enabled: true
     price: 100000
     data-value: 54
-  creeper: true
+  creeper:
     enabled: true
     price: 100000
     data-value: 50
-  cavespider: true
+  cavespider:
     enabled: true
     price: 100000
     data-value: 59
-  spider: true
+  spider:
     enabled: true
     price: 100000
     data-value: 52
-  wolf: true
+  wolf:
     enabled: true
     price: 100000
     data-value: 95
-  chicken: true
+  chicken:
     enabled: true
     price: 100000
     data-value: 93
-  cow: true
+  cow:
     enabled: true
     price: 100000
     data-value: 92
-  pig: true
+  pig:
     enabled: true
     price: 100000
     data-value: 90
-  ocelot: true
+  ocelot:
     enabled: true
     price: 100000
     data-value: 98
-  mushroom: true
+  mushroom:
     enabled: true
     price: 100000
     data-value: 96
-  sheep: true
+  sheep:
     enabled: true
     price: 100000
     data-value: 91
-  bat: true
+  bat:
     enabled: true
     price: 100000
     data-value: 65
-  rabbit: true
+  rabbit:
     enabled: true
     price: 100000
     data-value: 101
-  squid: true
+  squid:
     enabled: true
     price: 100000
     data-value: 94
-  villager: true
+  villager:
     enabled: true
     price: 100000
     data-value: 120
-  zombiepigman: true
+  zombiepigman:
     enabled: true
     price: 100000
     data-value: 57
-  silverfish: true
+  silverfish:
     enabled: true
     price: 100000
     data-value: 60
-  irongolem: true
+  irongolem:
     enabled: true
     price: 100000
     data-value: 99
-  slime: true
+  slime:
     enabled: true
     price: 100000
     data-value: 55
-  horse: true
+  horse:
     enabled: true
     price: 100000
     data-value: 100
-  witch: true
+  witch:
     enabled: true
     price: 100000
     data-value: 66
-  magmacube: true
+  magmacube:
     enabled: true
     price: 100000
     data-value: 62
