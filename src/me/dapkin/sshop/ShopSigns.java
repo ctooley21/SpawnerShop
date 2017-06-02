@@ -51,7 +51,7 @@ public class ShopSigns implements Listener {
                             e.setLine(3, plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(price1));
                         } else {
                             p.sendMessage("You have either not entered a price, or entered one incorrectly. The price has been set to the one specified in the config!");
-                            e.setLine(3, plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(plugin.getConfig().getInt("spawners." + line3 + ".price")));
+                            e.setLine(3, plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(plugin.getConfig().getInt("spawners." + line3 + ".buy-price")));
                         }
                     } else {
                         p.sendMessage("You have incorrectly formatted a SPAWNERSHOP sign!");
@@ -61,11 +61,34 @@ public class ShopSigns implements Listener {
                         e.setLine(2, "<MobType>");
                         e.setLine(3, "Price");
                     }
+                } else if(line2.equalsIgnoreCase("Sell")) {
+                    String price = e.getLine(3);
+                    ConfigurationSection spawnerSection = plugin.config.getConfigurationSection("spawners");
+                    if(spawnerSection.contains(line3)) {
+                        e.setLine(0, ChatColor.BLUE + "[SpawnerShop]");
+                        e.setLine(1, "Sell");
+                        e.setLine(2, line3);
+
+                        if (isInt(price)) {
+                            int price1 = Integer.parseInt(price);
+                            e.setLine(3, plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(price1));
+                        } else {
+                            p.sendMessage("You have either not entered a price, or entered one incorrectly. The price has been set to the one specified in the config!");
+                            e.setLine(3, plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(plugin.getConfig().getInt("spawners." + line3 + ".sell-price")));
+                        }
+                    } else {
+                        p.sendMessage("You have incorrectly formatted a SPAWNERSHOP sign!");
+                        p.sendMessage("Here is the correct FORMAT!");
+                        e.setLine(0, "[SpawnerShop]");
+                        e.setLine(1, "Buy/Sell");
+                        e.setLine(2, "<MobType>");
+                        e.setLine(3, "Price");
+                    }
                 } else {
                     p.sendMessage("You have incorrectly formatted a SPAWNERSHOP sign!");
                     p.sendMessage("Here is the correct FORMAT!");
                     e.setLine(0, "[SpawnerShop]");
-                    e.setLine(1, "Buy");
+                    e.setLine(1, "Buy/Sell");
                     e.setLine(2, "<MobType>");
                     e.setLine(3, "Price");
                 }
@@ -98,9 +121,20 @@ public class ShopSigns implements Listener {
                             p.sendMessage(error);
                         }
                     }else {
-                        SpawnerShop.economy.depositPlayer(p, realPrice);
-                        plugin.giveSpawner(p, line3);
-                        p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(realPrice) + " has been deposited into your account.");
+                        if(p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().getType() != Material.AIR) {
+                            if(p.getInventory().getItemInMainHand().getType() == Material.MOB_SPAWNER) {
+                                if(!p.getInventory().getItemInMainHand().hasItemMeta()) return;
+                                if(!p.getInventory().getItemInMainHand().getItemMeta().hasDisplayName()) return;
+                                String name = p.getInventory().getItemInMainHand().getItemMeta().getDisplayName();
+                                if(name.contains(ChatColor.COLOR_CHAR+"")) {
+                                    if(ChatColor.stripColor(name).replace(" Spawner","").equalsIgnoreCase(line3)) {
+                                        p.getInventory().getItemInMainHand().setAmount(p.getInventory().getItemInMainHand().getAmount()-1);
+                                        SpawnerShop.economy.depositPlayer(p, realPrice);
+                                        p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(realPrice) + " has been deposited into your account.");
+                                    }
+                                }
+                            }
+                        }
                     }
                 } else {
                     p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix")) + " " + ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.nopermission")));

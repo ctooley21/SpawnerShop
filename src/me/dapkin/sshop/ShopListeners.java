@@ -33,10 +33,10 @@ public class ShopListeners implements Listener {
                 return;
             }
             String spawner = ChatColor.stripColor(clicked.getItemMeta().getDisplayName().replace("Spawner", "").replace(" ", "").toLowerCase());
-            if(SpawnerShop.economy.getBalance(player) >= plugin.getConfig().getInt("prices." + spawner)) {
-                SpawnerShop.economy.withdrawPlayer(player, plugin.getConfig().getInt("prices." + spawner));
+            if(SpawnerShop.economy.getBalance(player) >= plugin.getConfig().getInt("spawners." + spawner + ".buy-price")) {
+                SpawnerShop.economy.withdrawPlayer(player, plugin.getConfig().getInt("spawners." + spawner + ".buy-price"));
                 plugin.giveSpawner(player, spawner);
-                player.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(plugin.getConfig().getInt("prices." + spawner)) + " has been taken from your account.");
+                player.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(plugin.getConfig().getInt("spawners." + spawner + ".buy-price")) + " has been taken from your account.");
                 player.closeInventory();
                 plugin.cooldown.put(player.getName(), System.currentTimeMillis());
             }else {

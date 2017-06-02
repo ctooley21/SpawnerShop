@@ -63,7 +63,7 @@ public class SpawnerShop extends JavaPlugin {
             spawnerMeta.setDisplayName(ChatColor.WHITE + capFirst(spawnerKey) + " Spawner");
             List<String> lore = new ArrayList<>();
             lore.add(ChatColor.GREEN + "Price: " +
-                    config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(getConfig().getInt("spawners." + spawnerKey + ".price")));
+                    config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(getConfig().getInt("spawners." + spawnerKey + ".buy-price")));
             spawnerMeta.setLore(lore);
             spawner.setItemMeta(spawnerMeta);
             spawnerInv.addItem(spawner);

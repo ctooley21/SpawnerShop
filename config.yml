@@ -14,145 +14,181 @@ options:
 spawners:
   Enderman:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 58
   Blaze:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 61
   Skeleton:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 51
   Zombie:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 54
   Creeper:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 50
   CaveSpider:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 59
   Spider:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 52
   Wolf:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 95
   Chicken:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 93
   Cow:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 92
   Pig:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 90
   Ocelot:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 98
   MushroomCow:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 96
   Sheep:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 91
   Bat:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 65
   Rabbit:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 101
   Squid:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 94
   Villager:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 120
   ZombiePigman:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 57
   SilverFish:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 60
   IronGolem:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 99
   Slime:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 55
   Horse:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 100
   Witch:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 66
   MagmaCube:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 62
   PolarBear:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 102
   Endermite:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 67
   Evoker:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 34
   Guardian:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 68
   Shulker:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 69
   Husk:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 23
   Stray:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 6
   Vex:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 35
   Vindicator:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 36
   Llama:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 103
   Mule:
     enabled: true
-    price: 100000
+    buy-price: 100000
+    sell-price: 10000
     data-value: 32
