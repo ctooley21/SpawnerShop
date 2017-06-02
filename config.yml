@@ -15,108 +15,144 @@ spawners:
   enderman:
     enabled: true
     price: 100000
+    data-value: 58
   blaze: true
     enabled: true
     price: 100000
+    data-value: 61
   skeleton: true
     enabled: true
     price: 100000
+    data-value: 51
   zombie: true
     enabled: true
     price: 100000
+    data-value: 54
   creeper: true
     enabled: true
     price: 100000
+    data-value: 50
   cavespider: true
     enabled: true
     price: 100000
+    data-value: 59
   spider: true
     enabled: true
     price: 100000
+    data-value: 52
   wolf: true
     enabled: true
     price: 100000
+    data-value: 95
   chicken: true
     enabled: true
     price: 100000
+    data-value: 93
   cow: true
     enabled: true
     price: 100000
+    data-value: 92
   pig: true
     enabled: true
     price: 100000
+    data-value: 90
   ocelot: true
     enabled: true
     price: 100000
+    data-value: 98
   mushroom: true
     enabled: true
     price: 100000
+    data-value: 96
   sheep: true
     enabled: true
     price: 100000
+    data-value: 91
   bat: true
     enabled: true
     price: 100000
+    data-value: 65
   rabbit: true
     enabled: true
     price: 100000
+    data-value: 101
   squid: true
     enabled: true
     price: 100000
+    data-value: 94
   villager: true
     enabled: true
     price: 100000
+    data-value: 120
   zombiepigman: true
     enabled: true
     price: 100000
+    data-value: 57
   silverfish: true
     enabled: true
     price: 100000
+    data-value: 60
   irongolem: true
     enabled: true
     price: 100000
+    data-value: 99
   slime: true
     enabled: true
     price: 100000
+    data-value: 55
   horse: true
     enabled: true
     price: 100000
+    data-value: 100
   witch: true
     enabled: true
     price: 100000
+    data-value: 66
   magmacube: true
     enabled: true
     price: 100000
+    data-value: 62
   polarbear:
     enabled: true
     price: 100000
+    data-value: 102
   endermite:
     enabled: true
     price: 100000
+    data-value: 67
   evoker:
     enabled: true
     price: 100000
+    data-value: 34
   guardian:
     enabled: true
     price: 100000
+    data-value: 68
   shulker:
     enabled: true
     price: 100000
+    data-value: 69
   husk:
     enabled: true
     price: 100000
+    data-value: 23
   stray:
     enabled: true
     price: 100000
+    data-value: 6
   vex:
     enabled: true
     price: 100000
+    data-value: 35
   vindicator:
     enabled: true
     price: 100000
+    data-value: 36
   llama:
     enabled: true
     price: 100000
+    data-value: 103
   mule:
     enabled: true
     price: 100000
+    data-value: 32
