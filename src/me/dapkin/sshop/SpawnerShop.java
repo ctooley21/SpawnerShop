@@ -53,7 +53,6 @@ public class SpawnerShop extends JavaPlugin {
     }
 
     void setupInv() {
-
         ConfigurationSection spawnerSection = config.getConfigurationSection("spawners");
 
         for(String spawnerKey : spawnerSection.getKeys(false)) {
