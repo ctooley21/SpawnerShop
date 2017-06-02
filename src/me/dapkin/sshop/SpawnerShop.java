@@ -106,7 +106,7 @@ public class SpawnerShop extends JavaPlugin {
                     case "Creeper":
                         spawner.setSpawnedType(EntityType.CREEPER);
                         break;
-                    case "Cave Spider":
+                    case "CaveSpider":
                         spawner.setSpawnedType(EntityType.CAVE_SPIDER);
                         break;
                     case "Spider":
@@ -127,7 +127,7 @@ public class SpawnerShop extends JavaPlugin {
                     case "Ocelot":
                         spawner.setSpawnedType(EntityType.OCELOT);
                         break;
-                    case "Mushroom Cow":
+                    case "MushroomCow":
                         spawner.setSpawnedType(EntityType.MUSHROOM_COW);
                         break;
                     case "Sheep":
@@ -145,13 +145,13 @@ public class SpawnerShop extends JavaPlugin {
                     case "Villager":
                         spawner.setSpawnedType(EntityType.VILLAGER);
                         break;
-                    case "Zombie Pigman":
+                    case "ZombiePigman":
                         spawner.setSpawnedType(EntityType.PIG_ZOMBIE);
                         break;
                     case "Silverfish":
                         spawner.setSpawnedType(EntityType.SILVERFISH);
                         break;
-                    case "Iron Golem":
+                    case "IronGolem":
                         spawner.setSpawnedType(EntityType.IRON_GOLEM);
                         break;
                     case "Slime":
@@ -165,6 +165,39 @@ public class SpawnerShop extends JavaPlugin {
                         break;
                     case "MagmaCube":
                         spawner.setSpawnedType(EntityType.MAGMA_CUBE);
+                        break;
+                    case "PolarBear":
+                        spawner.setSpawnedType(EntityType.POLAR_BEAR);
+                        break;
+                    case "Endermite":
+                        spawner.setSpawnedType(EntityType.ENDERMITE);
+                        break;
+                    case "Evoker":
+                        spawner.setSpawnedType(EntityType.EVOKER);
+                        break;
+                    case "Guardian":
+                        spawner.setSpawnedType(EntityType.GUARDIAN);
+                        break;
+                    case "Shulker":
+                        spawner.setSpawnedType(EntityType.SHULKER);
+                        break;
+                    case "Husk":
+                        spawner.setSpawnedType(EntityType.HUSK);
+                        break;
+                    case "Stray":
+                        spawner.setSpawnedType(EntityType.STRAY);
+                        break;
+                    case "Vex":
+                        spawner.setSpawnedType(EntityType.VEX);
+                        break;
+                    case "Vindicator":
+                        spawner.setSpawnedType(EntityType.VINDICATOR);
+                        break;
+                    case "Llama":
+                        spawner.setSpawnedType(EntityType.LLAMA);
+                        break;
+                    case "Mule":
+                        spawner.setSpawnedType(EntityType.MULE);
                         break;
                 }
                 spawner.update();

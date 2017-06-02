@@ -1,5 +1,6 @@
 package me.dapkin.sshop;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -51,7 +52,9 @@ public class ShopListeners implements Listener {
         if (!e.getItemInHand().hasItemMeta()) return;
         if (!e.getItemInHand().getItemMeta().hasDisplayName()) return;
 
-        String type = ChatColor.stripColor(e.getItemInHand().getItemMeta().getDisplayName()).replace(" Spawner", "");
-        plugin.updateSpawner(e.getBlock(), type);
+        String type = e.getItemInHand().getItemMeta().getDisplayName().replace(" Spawner", "");
+        if(type.contains(ChatColor.COLOR_CHAR+"")) {
+            plugin.updateSpawner(e.getBlock(), ChatColor.stripColor(type));
+        }
     }
 }
