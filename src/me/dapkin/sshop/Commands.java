@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 
 public class Commands implements CommandExecutor {
 
-    public SpawnerShop plugin;
+    private SpawnerShop plugin;
 
     public Commands(SpawnerShop plugin) {
         this.plugin = plugin;

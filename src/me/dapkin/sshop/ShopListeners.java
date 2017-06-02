@@ -31,7 +31,7 @@ public class ShopListeners implements Listener {
             if ((clicked == null) || (clicked.getType() == Material.AIR)) {
                 return;
             }
-            String spawner = clicked.getItemMeta().getDisplayName().replace("Spawner", "").replace(" ", "").toLowerCase();
+            String spawner = ChatColor.stripColor(clicked.getItemMeta().getDisplayName().replace("Spawner", "").replace(" ", "").toLowerCase());
             if(SpawnerShop.economy.getBalance(player) >= plugin.getConfig().getInt("prices." + spawner)) {
                 SpawnerShop.economy.withdrawPlayer(player, plugin.getConfig().getInt("prices." + spawner));
                 plugin.giveSpawner(player, spawner);
@@ -47,6 +47,7 @@ public class ShopListeners implements Listener {
 
     @EventHandler
     public void onPlace(BlockPlaceEvent e) {
+        if(e.getBlock().getType() != Material.MOB_SPAWNER) return;
         if (!e.getItemInHand().hasItemMeta()) return;
         if (!e.getItemInHand().getItemMeta().hasDisplayName()) return;
 

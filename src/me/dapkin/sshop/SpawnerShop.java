@@ -1,6 +1,5 @@
 package me.dapkin.sshop;
 
-import com.mysql.fabric.xmlrpc.base.Array;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -16,36 +15,27 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
-
-import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.logging.Level;
 
 public class SpawnerShop extends JavaPlugin {
     static Economy economy = null;
     Inventory spawnerInv = Bukkit.createInventory(null, getConfig().getInt("options.inventorysize"), getConfig().getString("options.shopname"));
-    HashMap<String, Long> cooldown = new HashMap<String, Long>();
+    HashMap<String, Long> cooldown = new HashMap<>();
     FileConfiguration config = getConfig();
 
     public void onEnable() {
         Bukkit.getServer().getPluginManager().registerEvents(new ShopSigns(this), this);
         Bukkit.getServer().getPluginManager().registerEvents(new ShopListeners(this), this);
         initialiseConfig();
-        this.getCommand("spawners").setExecutor(new Commands(this));
+        getCommand("spawners").setExecutor(new Commands(this));
         setupEconomy();
         setupInv();
-        try {
-            Metrics metrics = new Metrics(this);
-            metrics.start();
-        } catch (IOException e) {
-            Bukkit.getLogger().log(Level.WARNING, "Failed to log stats to Metrics!");
-        }
     }
 
-    public void initialiseConfig() {
+    private void initialiseConfig() {
         FileConfiguration config = getConfig();
         config.options().copyDefaults(true);
         saveConfig();
@@ -63,7 +53,7 @@ public class SpawnerShop extends JavaPlugin {
         return economy != null;
     }
 
-    public void setupInv() {
+    void setupInv() {
         ItemStack mushroom = new ItemStack(Material.MONSTER_EGG, 1, (short) 96);
         ItemStack sheep = new ItemStack(Material.MONSTER_EGG, 1, (short) 91);
         ItemStack ocelot = new ItemStack(Material.MONSTER_EGG, 1, (short) 98);
@@ -266,19 +256,24 @@ public class SpawnerShop extends JavaPlugin {
         }
     }
 
-    public void giveSpawner(Player p, String mob) {
+    void giveSpawner(Player p, String mob) {
         ItemStack mobSpawner = new ItemStack(Material.MOB_SPAWNER);
         ItemMeta mobMeta = mobSpawner.getItemMeta();
-        mobMeta.setDisplayName(ChatColor.WHITE + mob + " Spawner");
+        mobMeta.setDisplayName(ChatColor.WHITE + capFirst(mob) + " Spawner");
         mobSpawner.setItemMeta(mobMeta);
         p.getInventory().addItem(mobSpawner);
     }
 
-    public void updateSpawner(Block block, String type) {
+    private String capFirst(String string) {
+        return string.substring(0,1).toUpperCase() + string.substring(1);
+    }
+
+    void updateSpawner(Block block, String type) {
         BukkitScheduler scheduler = getServer().getScheduler();
         scheduler.scheduleSyncDelayedTask(this, new Runnable() {
             @Override
             public void run() {
+                if(!(block.getState() instanceof CreatureSpawner)) return;
                 CreatureSpawner spawner = (CreatureSpawner) block.getState();
                 switch (type) {
                     case "Enderman":
@@ -360,5 +355,125 @@ public class SpawnerShop extends JavaPlugin {
                 spawner.update();
             }
         }, 1L);
+    }
+
+    public short getSpawnerData(String spawner) {
+        short data;
+
+        switch (spawner) {
+            case "pig":
+                data = 90;
+                break;
+            case "mushroom":
+                data = 96;
+                break;
+            case "sheep":
+                data = 91;
+                break;
+            case "ocelot":
+                data = 98;
+                break;
+            case "cow":
+                data = 92;
+                break;
+            case "chicken":
+                data = 93;
+                break;
+            case "wolf":
+                data = 95;
+                break;
+            case "spider":
+                data = 52;
+                break;
+            case "cavespider":
+                data = 59;
+                break;
+            case "creeper":
+                data = 50;
+                break;
+            case "zombie":
+                data = 54;
+                break;
+            case "skeleton":
+                data = 51;
+                break;
+            case "blaze":
+                data = 61;
+                break;
+            case "enderman":
+                data = 58;
+                break;
+            case "bat":
+                data = 65;
+                break;
+            case "rabbit":
+                data = 101;
+                break;
+            case "squid":
+                data = 94;
+                break;
+            case "villager":
+                data = 120;
+                break;
+            case "zombiepigman":
+                data = 57;
+                break;
+            case "silverfish":
+                data = 60;
+                break;
+            case "irongolem":
+                data = 99;
+                break;
+            case "slime":
+                data = 55;
+                break;
+            case "horse":
+                data = 100;
+                break;
+            case "witch":
+                data = 66;
+                break;
+            case "magmacube":
+                data = 62;
+                break;
+            case "polarbear":
+                data = 102;
+                break;
+            case "endermite":
+                data = 67;
+                break;
+            case "evoker":
+                data = 34;
+                break;
+            case "guardian":
+                data = 68;
+                break;
+            case "shulker":
+                data = 69;
+                break;
+            case "husk":
+                data = 23;
+                break;
+            case "stray":
+                data = 6;
+                break;
+            case "vex":
+                data = 35;
+                break;
+            case "vindicator":
+                data = 36;
+                break;
+            case "llama":
+                data = 103;
+                break;
+            case "mule":
+                data = 32;
+                break;
+            default:
+                data = 90;
+                break;
+        }
+
+        return data;
     }
 }
