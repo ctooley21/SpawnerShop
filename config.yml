@@ -10,55 +10,113 @@ options:
   reloadsuccess: '&aYou have successfully reloaded SpawnerShop!'
   prefix: '&7[&eSpawnerShop&7]'
   nomoney: '&aYou do not have enough funds!'
-prices:
-  enderman: 100000
-  blaze: 100000
-  skeleton: 100000
-  zombie: 100000
-  creeper: 100000
-  cavespider: 100000
-  spider: 100000
-  wolf: 100000
-  chicken: 100000
-  cow: 100000
-  pig: 100000
-  ocelot: 100000
-  mushroom: 100000
-  sheep: 100000
-  bat: 100000
-  rabbit: 100000
-  squid: 100000
-  villager: 100000
-  zombiepig: 100000
-  silverfish: 100000
-  irongolem: 100000
-  slime: 100000
-  horse: 100000
-  witch: 100000
-  magmacube: 100000
+
 spawners:
-  enderman: true
+  enderman:
+    enabled: true
+    price: 100000
   blaze: true
+    enabled: true
+    price: 100000
   skeleton: true
+    enabled: true
+    price: 100000
   zombie: true
+    enabled: true
+    price: 100000
   creeper: true
+    enabled: true
+    price: 100000
   cavespider: true
+    enabled: true
+    price: 100000
   spider: true
+    enabled: true
+    price: 100000
   wolf: true
+    enabled: true
+    price: 100000
   chicken: true
+    enabled: true
+    price: 100000
   cow: true
+    enabled: true
+    price: 100000
   pig: true
+    enabled: true
+    price: 100000
   ocelot: true
+    enabled: true
+    price: 100000
   mushroom: true
+    enabled: true
+    price: 100000
   sheep: true
+    enabled: true
+    price: 100000
   bat: true
+    enabled: true
+    price: 100000
   rabbit: true
+    enabled: true
+    price: 100000
   squid: true
+    enabled: true
+    price: 100000
   villager: true
+    enabled: true
+    price: 100000
   zombiepigman: true
+    enabled: true
+    price: 100000
   silverfish: true
+    enabled: true
+    price: 100000
   irongolem: true
+    enabled: true
+    price: 100000
   slime: true
+    enabled: true
+    price: 100000
   horse: true
+    enabled: true
+    price: 100000
   witch: true
+    enabled: true
+    price: 100000
   magmacube: true
+    enabled: true
+    price: 100000
+  polarbear:
+    enabled: true
+    price: 100000
+  endermite:
+    enabled: true
+    price: 100000
+  evoker:
+    enabled: true
+    price: 100000
+  guardian:
+    enabled: true
+    price: 100000
+  shulker:
+    enabled: true
+    price: 100000
+  husk:
+    enabled: true
+    price: 100000
+  stray:
+    enabled: true
+    price: 100000
+  vex:
+    enabled: true
+    price: 100000
+  vindicator:
+    enabled: true
+    price: 100000
+  llama:
+    enabled: true
+    price: 100000
+  mule:
+    enabled: true
+    price: 100000
