@@ -1,5 +1,7 @@
 package me.dapkin.sshop;
 
+import me.dapkin.sshop.commands.Commands;
+import me.dapkin.sshop.listeners.ShopListeners;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -20,10 +22,11 @@ import java.text.NumberFormat;
 import java.util.*;
 
 public class SpawnerShop extends JavaPlugin {
-    static Economy economy = null;
-    Inventory spawnerInv = Bukkit.createInventory(null, getConfig().getInt("options.inventorysize"), getConfig().getString("options.shopname"));
-    HashMap<String, Long> cooldown = new HashMap<>();
-    FileConfiguration config = getConfig();
+
+    public static Economy economy = null;
+    public Inventory spawnerInv = Bukkit.createInventory(null, getConfig().getInt("options.inventorysize"), getConfig().getString("options.shopname"));
+    public HashMap<String, Long> cooldown = new HashMap<>();
+    public FileConfiguration config = getConfig();
 
     public void onEnable() {
         Bukkit.getServer().getPluginManager().registerEvents(new ShopSigns(this), this);
@@ -52,7 +55,7 @@ public class SpawnerShop extends JavaPlugin {
         return economy != null;
     }
 
-    void setupInv() {
+    public void setupInv() {
         ConfigurationSection spawnerSection = config.getConfigurationSection("spawners");
 
         for(String spawnerKey : spawnerSection.getKeys(false)) {
@@ -70,7 +73,7 @@ public class SpawnerShop extends JavaPlugin {
         }
     }
 
-    void giveSpawner(Player p, String mob) {
+    public void giveSpawner(Player p, String mob) {
         ItemStack mobSpawner = new ItemStack(Material.MOB_SPAWNER);
         ItemMeta mobMeta = mobSpawner.getItemMeta();
         mobMeta.setDisplayName(ChatColor.WHITE + capFirst(mob) + " Spawner");
@@ -82,7 +85,7 @@ public class SpawnerShop extends JavaPlugin {
         return string.substring(0,1).toUpperCase() + string.substring(1);
     }
 
-    void updateSpawner(Block block, String type) {
+    public void updateSpawner(Block block, String type) {
         BukkitScheduler scheduler = getServer().getScheduler();
         scheduler.scheduleSyncDelayedTask(this, new Runnable() {
             @Override

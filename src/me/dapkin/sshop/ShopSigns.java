@@ -57,7 +57,7 @@ public class ShopSigns implements Listener {
                         p.sendMessage("You have incorrectly formatted a SPAWNERSHOP sign!");
                         p.sendMessage("Here is the correct FORMAT!");
                         e.setLine(0, "[SpawnerShop]");
-                        e.setLine(1, "Buy");
+                        e.setLine(1, "Buy/Sell");
                         e.setLine(2, "<MobType>");
                         e.setLine(3, "Price");
                     }

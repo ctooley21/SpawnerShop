@@ -1,6 +1,6 @@
-package me.dapkin.sshop;
+package me.dapkin.sshop.listeners;
 
-import org.bukkit.Bukkit;
+import me.dapkin.sshop.SpawnerShop;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -17,7 +17,7 @@ import java.util.Locale;
 public class ShopListeners implements Listener {
     private final SpawnerShop plugin;
 
-    ShopListeners(SpawnerShop plugin) {
+    public ShopListeners(SpawnerShop plugin) {
         this.plugin = plugin;
     }
 

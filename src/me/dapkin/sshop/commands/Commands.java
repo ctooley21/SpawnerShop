@@ -1,5 +1,6 @@
-package me.dapkin.sshop;
+package me.dapkin.sshop.commands;
 
+import me.dapkin.sshop.SpawnerShop;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
