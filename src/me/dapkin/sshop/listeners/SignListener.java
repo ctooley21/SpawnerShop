@@ -1,5 +1,6 @@
-package me.dapkin.sshop;
+package me.dapkin.sshop.listeners;
 
+import me.dapkin.sshop.SpawnerShop;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
@@ -14,10 +15,11 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-public class ShopSigns implements Listener {
+public class SignListener implements Listener {
+
     private SpawnerShop plugin;
 
-    ShopSigns(SpawnerShop plugin) {
+    public SignListener(SpawnerShop plugin) {
         this.plugin = plugin;
     }
 
@@ -106,6 +108,12 @@ public class ShopSigns implements Listener {
             Sign sign = (Sign) e.getClickedBlock().getState();
             if (sign.getLine(0).equalsIgnoreCase(ChatColor.BLUE + "[SpawnerShop]")) {
                 if ((p.hasPermission("spawnershop.signs.use")) || (p.isOp())) {
+                    String spawner = sign.getLine(2).toLowerCase();
+                    String method = sign.getLine(1).toLowerCase();
+                    if(!p.hasPermission("spawnershop." + method + "." + spawner.toLowerCase()) && !p.hasPermission("spawnershop." + method + ".all")) {
+                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix")) + " " + ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.nopermission")));
+                        return;
+                    }
                     String line3 = sign.getLine(2);
                     String error = ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix")) + " " + ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.nomoney"));
                     String price = sign.getLine(3);

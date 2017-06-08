@@ -2,6 +2,7 @@ package me.dapkin.sshop;
 
 import me.dapkin.sshop.commands.Commands;
 import me.dapkin.sshop.listeners.ShopListeners;
+import me.dapkin.sshop.listeners.SignListener;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -29,7 +30,7 @@ public class SpawnerShop extends JavaPlugin {
     public FileConfiguration config = getConfig();
 
     public void onEnable() {
-        Bukkit.getServer().getPluginManager().registerEvents(new ShopSigns(this), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new SignListener(this), this);
         Bukkit.getServer().getPluginManager().registerEvents(new ShopListeners(this), this);
         initialiseConfig();
         getCommand("spawners").setExecutor(new Commands(this));

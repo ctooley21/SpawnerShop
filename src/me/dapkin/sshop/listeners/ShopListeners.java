@@ -1,6 +1,7 @@
 package me.dapkin.sshop.listeners;
 
 import me.dapkin.sshop.SpawnerShop;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -15,6 +16,7 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 public class ShopListeners implements Listener {
+
     private final SpawnerShop plugin;
 
     public ShopListeners(SpawnerShop plugin) {
@@ -32,7 +34,11 @@ public class ShopListeners implements Listener {
             if ((clicked == null) || (clicked.getType() == Material.AIR)) {
                 return;
             }
-            String spawner = ChatColor.stripColor(clicked.getItemMeta().getDisplayName().replace("Spawner", "").replace(" ", "").toLowerCase());
+            String spawner = ChatColor.stripColor(clicked.getItemMeta().getDisplayName().replace("Spawner", "").replace(" ", ""));
+            if(!player.hasPermission("spawnershop.buy." + spawner.toLowerCase()) && !player.hasPermission("spawnershop.buy.all")) {
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix")) + " " + ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.nopermission")));
+                return;
+            }
             if(SpawnerShop.economy.getBalance(player) >= plugin.getConfig().getInt("spawners." + spawner + ".buy-price")) {
                 SpawnerShop.economy.withdrawPlayer(player, plugin.getConfig().getInt("spawners." + spawner + ".buy-price"));
                 plugin.giveSpawner(player, spawner);
