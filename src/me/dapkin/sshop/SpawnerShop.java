@@ -151,7 +151,7 @@ public class SpawnerShop extends JavaPlugin {
                     case "ZombiePigman":
                         spawner.setSpawnedType(EntityType.PIG_ZOMBIE);
                         break;
-                    case "Silverfish":
+                    case "SilverFish":
                         spawner.setSpawnedType(EntityType.SILVERFISH);
                         break;
                     case "IronGolem":
