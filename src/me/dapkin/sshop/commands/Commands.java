@@ -27,12 +27,12 @@ public class Commands implements CommandExecutor {
                         if (diff < cooldown_time) {
                             p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix")) + " " + ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.cooldownmessage")));
                         } else {
-                            p.openInventory(plugin.spawnerInv);
+                            plugin.openInv(p);
                             p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix")) + " " + ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.openmessage")));
                             plugin.cooldown.remove(p.getName());
                         }
                     } else {
-                        p.openInventory(plugin.spawnerInv);
+                        plugin.openInv(p);
                         p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix")) + " " + ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.openmessage")));
                     }
                 } else {
@@ -41,8 +41,6 @@ public class Commands implements CommandExecutor {
             } else if (args.length == 1) {
                 if (args[0].equalsIgnoreCase("reload")) {
                     if (p.hasPermission("spawnershop.reload") || p.isOp()) {
-                        plugin.spawnerInv.clear();
-                        plugin.setupInv();
                         p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix")) + " " + ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.reloadsuccess")));
                     } else {
                         p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix")) + " " + ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.nopermission")));

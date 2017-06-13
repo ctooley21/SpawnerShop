@@ -192,3 +192,13 @@ spawners:
     buy-price: 100000
     sell-price: 10000
     data-value: 32
+  Illusioner:
+    enabled: true
+    buy-price: 100000
+    sell-price: 10000
+    data-value: 32
+  Parrot:
+    enabled: true
+    buy-price: 100000
+    sell-price: 10000
+    data-value: 105

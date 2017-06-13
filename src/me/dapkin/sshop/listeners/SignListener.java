@@ -56,12 +56,7 @@ public class SignListener implements Listener {
                             e.setLine(3, plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(plugin.getConfig().getInt("spawners." + line3 + ".buy-price")));
                         }
                     } else {
-                        p.sendMessage("You have incorrectly formatted a SPAWNERSHOP sign!");
-                        p.sendMessage("Here is the correct FORMAT!");
-                        e.setLine(0, "[SpawnerShop]");
-                        e.setLine(1, "Buy/Sell");
-                        e.setLine(2, "<MobType>");
-                        e.setLine(3, "Price");
+                        sendFormatMessage(e);
                     }
                 } else if(line2.equalsIgnoreCase("Sell")) {
                     String price = e.getLine(3);
@@ -79,20 +74,10 @@ public class SignListener implements Listener {
                             e.setLine(3, plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(plugin.getConfig().getInt("spawners." + line3 + ".sell-price")));
                         }
                     } else {
-                        p.sendMessage("You have incorrectly formatted a SPAWNERSHOP sign!");
-                        p.sendMessage("Here is the correct FORMAT!");
-                        e.setLine(0, "[SpawnerShop]");
-                        e.setLine(1, "Buy/Sell");
-                        e.setLine(2, "<MobType>");
-                        e.setLine(3, "Price");
+                        sendFormatMessage(e);
                     }
                 } else {
-                    p.sendMessage("You have incorrectly formatted a SPAWNERSHOP sign!");
-                    p.sendMessage("Here is the correct FORMAT!");
-                    e.setLine(0, "[SpawnerShop]");
-                    e.setLine(1, "Buy/Sell");
-                    e.setLine(2, "<MobType>");
-                    e.setLine(3, "Price");
+                   sendFormatMessage(e);
                 }
             } else {
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix")) + " " + ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.nopermission")));
@@ -149,5 +134,15 @@ public class SignListener implements Listener {
                 }
             }
         }
+    }
+
+    private void sendFormatMessage(SignChangeEvent e) {
+        Player p = e.getPlayer();
+        p.sendMessage("You have incorrectly formatted a SPAWNERSHOP sign!");
+        p.sendMessage("Here is the correct FORMAT!");
+        e.setLine(0, "[SpawnerShop]");
+        e.setLine(1, "Buy/Sell");
+        e.setLine(2, "<MobType>");
+        e.setLine(3, "Price");
     }
 }

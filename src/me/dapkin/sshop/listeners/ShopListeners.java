@@ -29,7 +29,9 @@ public class ShopListeners implements Listener {
         ItemStack clicked = event.getCurrentItem();
         Inventory inventory = event.getInventory();
         String error = ChatColor.RED + "Error:" + ChatColor.DARK_RED + " You do not have sufficient funds.";
-        if (inventory.getName().equals(plugin.spawnerInv.getName())) {
+        if (ChatColor.stripColor(inventory.getName()).equalsIgnoreCase(ChatColor.stripColor(
+                ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("options.shopname"))
+        ))) {
             event.setCancelled(true);
             if ((clicked == null) || (clicked.getType() == Material.AIR)) {
                 return;

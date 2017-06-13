@@ -11,6 +11,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -25,7 +26,6 @@ import java.util.*;
 public class SpawnerShop extends JavaPlugin {
 
     public static Economy economy = null;
-    public Inventory spawnerInv = Bukkit.createInventory(null, getConfig().getInt("options.inventorysize"), getConfig().getString("options.shopname"));
     public HashMap<String, Long> cooldown = new HashMap<>();
     public FileConfiguration config = getConfig();
 
@@ -35,7 +35,6 @@ public class SpawnerShop extends JavaPlugin {
         initialiseConfig();
         getCommand("spawners").setExecutor(new Commands(this));
         setupEconomy();
-        setupInv();
     }
 
     private void initialiseConfig() {
@@ -56,11 +55,14 @@ public class SpawnerShop extends JavaPlugin {
         return economy != null;
     }
 
-    public void setupInv() {
+    public void openInv(Player player) {
+        Inventory spawnerInv = Bukkit.createInventory(null, getConfig().getInt("options.inventorysize"), getConfig().getString("options.shopname"));
+
         ConfigurationSection spawnerSection = config.getConfigurationSection("spawners");
 
         for(String spawnerKey : spawnerSection.getKeys(false)) {
             if(!config.getBoolean("spawners." + spawnerKey + ".enabled")) continue;
+            if(!player.hasPermission("spawnershop.buy." + spawnerKey.toLowerCase()) && !player.isOp()) continue;
             short data = (short) config.getInt("spawners." + spawnerKey + ".data-value");
             ItemStack spawner = new ItemStack(Material.MONSTER_EGG, 1, data);
             ItemMeta spawnerMeta = spawner.getItemMeta();
@@ -72,6 +74,7 @@ public class SpawnerShop extends JavaPlugin {
             spawner.setItemMeta(spawnerMeta);
             spawnerInv.addItem(spawner);
         }
+        player.openInventory(spawnerInv);
     }
 
     public void giveSpawner(Player p, String mob) {
@@ -201,6 +204,12 @@ public class SpawnerShop extends JavaPlugin {
                         break;
                     case "Mule":
                         spawner.setSpawnedType(EntityType.MULE);
+                        break;
+                    case "Illusioner":
+                        spawner.setSpawnedType(EntityType.ILLUSIONER);
+                        break;
+                    case "Parrot":
+                        spawner.setSpawnedType(EntityType.PARROT);
                         break;
                 }
                 spawner.update();
