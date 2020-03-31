@@ -1,7 +1,8 @@
 name: SpawnerShop
 version: 4.0
-main: me.dapkin.sshop.SpawnerShop
+main: com.ctooley.plugins.SpawnerShop
 depend: [Vault]
+api-version: 1.15
 commands:
   spawners:
     description: This is the main command!

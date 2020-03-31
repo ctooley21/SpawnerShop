@@ -1,16 +1,20 @@
-package me.dapkin.sshop.listeners;
+package com.ctooley.plugins.listeners;
 
-import me.dapkin.sshop.SpawnerShop;
-import org.bukkit.Bukkit;
+import com.ctooley.plugins.SpawnerShop;
+import com.ctooley.plugins.util.Util;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.CreatureSpawner;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitScheduler;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -27,9 +31,8 @@ public class ShopListeners implements Listener {
     public void onInventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
         ItemStack clicked = event.getCurrentItem();
-        Inventory inventory = event.getInventory();
         String error = ChatColor.RED + "Error:" + ChatColor.DARK_RED + " You do not have sufficient funds.";
-        if (ChatColor.stripColor(inventory.getName()).equalsIgnoreCase(ChatColor.stripColor(
+        if (ChatColor.stripColor(event.getView().getTitle()).equalsIgnoreCase(ChatColor.stripColor(
                 ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("options.shopname"))
         ))) {
             event.setCancelled(true);
@@ -43,7 +46,7 @@ public class ShopListeners implements Listener {
             }
             if(SpawnerShop.economy.getBalance(player) >= plugin.getConfig().getInt("spawners." + spawner + ".buy-price")) {
                 SpawnerShop.economy.withdrawPlayer(player, plugin.getConfig().getInt("spawners." + spawner + ".buy-price"));
-                plugin.giveSpawner(player, spawner);
+                Util.giveSpawner(player, spawner);
                 player.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(plugin.getConfig().getInt("spawners." + spawner + ".buy-price")) + " has been taken from your account.");
                 player.closeInventory();
                 plugin.cooldown.put(player.getName(), System.currentTimeMillis());
@@ -56,13 +59,20 @@ public class ShopListeners implements Listener {
 
     @EventHandler
     public void onPlace(BlockPlaceEvent e) {
-        if(e.getBlock().getType() != Material.MOB_SPAWNER) return;
+        if(e.getBlock().getType() != Material.SPAWNER) return;
         if (!e.getItemInHand().hasItemMeta()) return;
         if (!e.getItemInHand().getItemMeta().hasDisplayName()) return;
 
-        String type = e.getItemInHand().getItemMeta().getDisplayName().replace(" Spawner", "");
-        if(type.contains(ChatColor.COLOR_CHAR+"")) {
-            plugin.updateSpawner(e.getBlock(), ChatColor.stripColor(type));
-        }
+        Block block = e.getBlock();
+        BukkitScheduler scheduler = plugin.getServer().getScheduler();
+            scheduler.scheduleSyncDelayedTask(plugin, new Runnable() {
+                @Override
+                public void run() {
+                    if(!(block.getState() instanceof CreatureSpawner)) return;
+                    CreatureSpawner spawner = (CreatureSpawner) block.getState();
+                    spawner.setSpawnedType(EntityType.BLAZE);
+                    spawner.update();
+                }
+            }, 1L);
     }
 }

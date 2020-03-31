@@ -1,6 +1,8 @@
-package me.dapkin.sshop.listeners;
+package com.ctooley.plugins.listeners;
 
-import me.dapkin.sshop.SpawnerShop;
+import com.ctooley.plugins.SpawnerShop;
+import com.ctooley.plugins.util.Util;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
@@ -86,16 +88,22 @@ public class SignListener implements Listener {
     }
 
     @EventHandler
-    public void onRightClick(PlayerInteractEvent e) {
+    public void onRightClick(PlayerInteractEvent e) 
+    {
         Player p = e.getPlayer();
-        if ((e.getAction() == Action.RIGHT_CLICK_BLOCK) && (
-                (e.getClickedBlock().getType() == Material.SIGN) || (e.getClickedBlock().getType() == Material.WALL_SIGN) || (e.getClickedBlock().getType() == Material.SIGN_POST))) {
+        if(e.getClickedBlock() == null) return;
+        boolean isSign = isSign(e.getClickedBlock().getType());
+        if ((e.getAction() == Action.RIGHT_CLICK_BLOCK) && isSign) 
+        {
             Sign sign = (Sign) e.getClickedBlock().getState();
-            if (sign.getLine(0).equalsIgnoreCase(ChatColor.BLUE + "[SpawnerShop]")) {
-                if ((p.hasPermission("spawnershop.signs.use")) || (p.isOp())) {
+            if (sign.getLine(0).equalsIgnoreCase(ChatColor.BLUE + "[SpawnerShop]")) 
+            {
+                if ((p.hasPermission("spawnershop.signs.use")) || (p.isOp())) 
+                {
                     String spawner = sign.getLine(2).toLowerCase();
                     String method = sign.getLine(1).toLowerCase();
-                    if(!p.hasPermission("spawnershop." + method + "." + spawner.toLowerCase()) && !p.hasPermission("spawnershop." + method + ".all")) {
+                    if(!p.hasPermission("spawnershop." + method + "." + spawner.toLowerCase()) && !p.hasPermission("spawnershop." + method + ".all")) 
+                    {
                         p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix")) + " " + ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.nopermission")));
                         return;
                     }
@@ -108,19 +116,24 @@ public class SignListener implements Listener {
                     if (sign.getLine(1).equalsIgnoreCase("Buy")) {
                         if(SpawnerShop.economy.getBalance(p) >= realPrice) {
                             SpawnerShop.economy.withdrawPlayer(p, realPrice);
-                            plugin.giveSpawner(p, line3);
+                            Util.giveSpawner(p, line3);
                             p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(realPrice) + " has been taken from your account.");
                         }else {
                             p.sendMessage(error);
                         }
-                    }else {
-                        if(p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().getType() != Material.AIR) {
-                            if(p.getInventory().getItemInMainHand().getType() == Material.MOB_SPAWNER) {
+                    }else 
+                    {
+                        if(p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().getType() != Material.AIR) 
+                        {
+                            if(p.getInventory().getItemInMainHand().getType() == Material.SPAWNER) 
+                            {
                                 if(!p.getInventory().getItemInMainHand().hasItemMeta()) return;
                                 if(!p.getInventory().getItemInMainHand().getItemMeta().hasDisplayName()) return;
                                 String name = p.getInventory().getItemInMainHand().getItemMeta().getDisplayName();
-                                if(name.contains(ChatColor.COLOR_CHAR+"")) {
-                                    if(ChatColor.stripColor(name).replace(" Spawner","").equalsIgnoreCase(line3)) {
+                                if(name.contains(ChatColor.COLOR_CHAR+"")) 
+                                {
+                                    if(ChatColor.stripColor(name).replace(" Spawner","").equalsIgnoreCase(line3)) 
+                                    {
                                         p.getInventory().getItemInMainHand().setAmount(p.getInventory().getItemInMainHand().getAmount()-1);
                                         SpawnerShop.economy.depositPlayer(p, realPrice);
                                         p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(realPrice) + " has been deposited into your account.");
@@ -129,14 +142,16 @@ public class SignListener implements Listener {
                             }
                         }
                     }
-                } else {
+                } else 
+                {
                     p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix")) + " " + ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.nopermission")));
                 }
             }
         }
     }
 
-    private void sendFormatMessage(SignChangeEvent e) {
+    private void sendFormatMessage(SignChangeEvent e) 
+    {
         Player p = e.getPlayer();
         p.sendMessage("You have incorrectly formatted a SPAWNERSHOP sign!");
         p.sendMessage("Here is the correct FORMAT!");
@@ -144,5 +159,10 @@ public class SignListener implements Listener {
         e.setLine(1, "Buy/Sell");
         e.setLine(2, "<MobType>");
         e.setLine(3, "Price");
+    }
+
+    private boolean isSign(Material material)
+    {
+        return material.name().toLowerCase().contains("sign");
     }
 }

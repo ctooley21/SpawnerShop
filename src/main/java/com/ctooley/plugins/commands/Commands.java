@@ -1,6 +1,8 @@
-package me.dapkin.sshop.commands;
+package com.ctooley.plugins.commands;
 
-import me.dapkin.sshop.SpawnerShop;
+import com.ctooley.plugins.SpawnerShop;
+import com.ctooley.plugins.util.Util;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -21,18 +23,18 @@ public class Commands implements CommandExecutor {
             Player p = (Player) sender;
             if (args.length == 0) {
                 if (p.hasPermission("spawnershop.use")) {
-                    if (plugin.cooldown.containsKey(p.getName())) {
+                    if (plugin.cooldown.containsKey(p.getName()) && !p.isOp()) {
                         int cooldown_time = plugin.config.getInt("options.cooldown");
                         long diff = (System.currentTimeMillis() - plugin.cooldown.get(p.getName())) / 1000L;
                         if (diff < cooldown_time) {
                             p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix")) + " " + ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.cooldownmessage")));
                         } else {
-                            plugin.openInv(p);
+                            Util.openInv(p);
                             p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix")) + " " + ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.openmessage")));
                             plugin.cooldown.remove(p.getName());
                         }
                     } else {
-                        plugin.openInv(p);
+                        Util.openInv(p);
                         p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix")) + " " + ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.openmessage")));
                     }
                 } else {
@@ -51,7 +53,7 @@ public class Commands implements CommandExecutor {
             } else if (args.length == 2) {
                 if (args[0].equalsIgnoreCase("give")) {
                     if (p.hasPermission("spawnershop.give")) {
-                        plugin.giveSpawner(p, args[1]);
+                        Util.giveSpawner(p, args[1]);
                     } else {
                         p.sendMessage(ChatColor.RED + "No permission!");
                     }
