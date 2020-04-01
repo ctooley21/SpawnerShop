@@ -18,7 +18,7 @@ public class VaultAPI
         setupEconomy();
     }
 
-    private boolean setupEconomy() 
+    private void setupEconomy() 
     {
         RegisteredServiceProvider<Economy> economyProvider = plugin.getServer().getServicesManager().getRegistration(Economy.class);
 
@@ -26,7 +26,5 @@ public class VaultAPI
         {
             economy = economyProvider.getProvider();
         }
-
-        return economy != null;
     }
 }
