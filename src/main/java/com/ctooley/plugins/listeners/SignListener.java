@@ -19,10 +19,12 @@ import java.util.Locale;
 
 public class SignListener implements Listener {
 
-    private SpawnerShop plugin;
+    private final SpawnerShop plugin;
+    private final Util util;
 
-    public SignListener(SpawnerShop plugin) {
+    public SignListener(SpawnerShop plugin, Util util) {
         this.plugin = plugin;
+        this.util = util;
     }
 
     private boolean isInt(String s) {
@@ -116,7 +118,7 @@ public class SignListener implements Listener {
                     if (sign.getLine(1).equalsIgnoreCase("Buy")) {
                         if(SpawnerShop.economy.getBalance(p) >= realPrice) {
                             SpawnerShop.economy.withdrawPlayer(p, realPrice);
-                            Util.giveSpawner(p, line3);
+                            util.giveSpawner(p, line3);
                             p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(realPrice) + " has been taken from your account.");
                         }else {
                             p.sendMessage(error);

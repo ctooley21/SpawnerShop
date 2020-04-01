@@ -22,9 +22,11 @@ import java.util.Locale;
 public class ShopListeners implements Listener {
 
     private final SpawnerShop plugin;
+    private final Util util;
 
-    public ShopListeners(SpawnerShop plugin) {
+    public ShopListeners(SpawnerShop plugin, Util util) {
         this.plugin = plugin;
+        this.util = util;
     }
 
     @EventHandler
@@ -46,7 +48,7 @@ public class ShopListeners implements Listener {
             }
             if(SpawnerShop.economy.getBalance(player) >= plugin.getConfig().getInt("spawners." + spawner + ".buy-price")) {
                 SpawnerShop.economy.withdrawPlayer(player, plugin.getConfig().getInt("spawners." + spawner + ".buy-price"));
-                Util.giveSpawner(player, spawner);
+                util.giveSpawner(player, spawner);
                 player.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(plugin.getConfig().getInt("spawners." + spawner + ".buy-price")) + " has been taken from your account.");
                 player.closeInventory();
                 plugin.cooldown.put(player.getName(), System.currentTimeMillis());

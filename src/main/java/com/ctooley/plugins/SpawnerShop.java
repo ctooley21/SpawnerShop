@@ -18,13 +18,15 @@ public class SpawnerShop extends JavaPlugin
     public static Economy economy = null;
     public HashMap<String, Long> cooldown = new HashMap<>();
     public FileConfiguration config = getConfig();
+    private Util util;
 
     public void onEnable() 
     {
-        Bukkit.getServer().getPluginManager().registerEvents(new SignListener(this), this);
-        Bukkit.getServer().getPluginManager().registerEvents(new ShopListeners(this), this);
         initialiseConfig();
-        getCommand("spawners").setExecutor(new Commands(this));
+        util = new Util(config);
+        Bukkit.getServer().getPluginManager().registerEvents(new SignListener(this, util), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new ShopListeners(this, util), this);
+        getCommand("spawners").setExecutor(new Commands(this, util));
         setupEconomy();
         new Util(config);
     }

@@ -1,5 +1,5 @@
 name: SpawnerShop
-version: 4.0
+version: 4.1
 main: com.ctooley.plugins.SpawnerShop
 depend: [Vault]
 api-version: 1.15
@@ -12,7 +12,7 @@ permissions:
     description: Gives access to the command /spawners
     default: true
   spawnershop.reload:
-    description: Gives access to /spawners reload which allows you to reload the config.
+    description: Gives access to /spawners reload which allows you to reload the configuration file.
     default: false
   spawnershop.signs.use:
     description: Gives access to use the SpawnerShop signs!

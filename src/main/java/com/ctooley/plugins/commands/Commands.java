@@ -11,10 +11,12 @@ import org.bukkit.entity.Player;
 
 public class Commands implements CommandExecutor {
 
-    private SpawnerShop plugin;
+    private final SpawnerShop plugin;
+    private final Util util;
 
-    public Commands(SpawnerShop plugin) {
+    public Commands(SpawnerShop plugin, Util util) {
         this.plugin = plugin;
+        this.util = util;
     }
 
     @Override
@@ -27,25 +29,42 @@ public class Commands implements CommandExecutor {
                         int cooldown_time = plugin.config.getInt("options.cooldown");
                         long diff = (System.currentTimeMillis() - plugin.cooldown.get(p.getName())) / 1000L;
                         if (diff < cooldown_time) {
-                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix")) + " " + ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.cooldownmessage")));
+                            p.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                    plugin.config.getString("options.prefix")) + " "
+                                    + ChatColor.translateAlternateColorCodes('&',
+                                            plugin.config.getString("options.cooldownmessage")));
                         } else {
-                            Util.openInv(p);
-                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix")) + " " + ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.openmessage")));
+                            util.openInventory(p);
+                            p.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                    plugin.config.getString("options.prefix")) + " "
+                                    + ChatColor.translateAlternateColorCodes('&',
+                                            plugin.config.getString("options.openmessage")));
                             plugin.cooldown.remove(p.getName());
                         }
                     } else {
-                        Util.openInv(p);
-                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix")) + " " + ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.openmessage")));
+                        util.openInventory(p);
+                        p.sendMessage(
+                                ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix"))
+                                        + " " + ChatColor.translateAlternateColorCodes('&',
+                                                plugin.config.getString("options.openmessage")));
                     }
                 } else {
-                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix")) + " " + ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.nopermission")));
+                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix"))
+                            + " " + ChatColor.translateAlternateColorCodes('&',
+                                    plugin.config.getString("options.nopermission")));
                 }
             } else if (args.length == 1) {
                 if (args[0].equalsIgnoreCase("reload")) {
                     if (p.hasPermission("spawnershop.reload") || p.isOp()) {
-                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix")) + " " + ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.reloadsuccess")));
+                        p.sendMessage(
+                                ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix"))
+                                        + " " + ChatColor.translateAlternateColorCodes('&',
+                                                plugin.config.getString("options.reloadsuccess")));
                     } else {
-                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix")) + " " + ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.nopermission")));
+                        p.sendMessage(
+                                ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix"))
+                                        + " " + ChatColor.translateAlternateColorCodes('&',
+                                                plugin.config.getString("options.nopermission")));
                     }
                 } else if (args[0].equalsIgnoreCase("give")) {
                     p.sendMessage(ChatColor.GREEN + "Please choose a spawner type!");
@@ -53,7 +72,7 @@ public class Commands implements CommandExecutor {
             } else if (args.length == 2) {
                 if (args[0].equalsIgnoreCase("give")) {
                     if (p.hasPermission("spawnershop.give")) {
-                        Util.giveSpawner(p, args[1]);
+                        util.giveSpawner(p, args[1]);
                     } else {
                         p.sendMessage(ChatColor.RED + "No permission!");
                     }

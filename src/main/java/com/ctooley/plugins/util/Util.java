@@ -17,24 +17,21 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class Util
 {
-
-    private static Inventory shopInventory;
-    ConfigurationSection spawnerSection;
-    FileConfiguration config;
+    private ConfigurationSection spawnerSection;
+    private FileConfiguration config;
 
     public Util(FileConfiguration config)
     {
-        if(shopInventory == null)
+        if(this.config == null)
         {
             this.spawnerSection = config.getConfigurationSection("spawners");
             this.config = config;
-            setupInventory();
         }
     }
 
-    private void setupInventory()
+    public void openInventory(Player player)
     {
-        shopInventory = Bukkit.createInventory(null, config.getInt("options.inventorysize"), config.getString("options.shopname"));
+        Inventory shopInventory = Bukkit.createInventory(null, config.getInt("options.inventorysize"), config.getString("options.shopname"));
 
         for(String spawnerKey : spawnerSection.getKeys(false)) 
         {
@@ -45,16 +42,18 @@ public class Util
 
             ItemStack spawner = new ItemStack(Material.getMaterial(spawnerKey + "_SPAWN_EGG"), 1);
             ItemMeta spawnerMeta = spawner.getItemMeta();
-            spawnerMeta.setDisplayName(ChatColor.WHITE + Util.formatSpawner(spawnerKey) + " Spawner");
+            spawnerMeta.setDisplayName(ChatColor.WHITE + formatSpawner(spawnerKey) + " Spawner");
             List<String> lore = new ArrayList<>();
             lore.add(ChatColor.GREEN + "Price: " + config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(config.getInt("spawners." + spawnerKey + ".buy-price")));
             spawnerMeta.setLore(lore);
             spawner.setItemMeta(spawnerMeta);
             shopInventory.addItem(spawner);
         }
+
+        player.openInventory(shopInventory);
     }
 
-    public static void giveSpawner(Player p, String mob) {
+    public void giveSpawner(Player p, String mob) {
         ItemStack mobSpawner = new ItemStack(Material.SPAWNER);
         ItemMeta mobMeta = mobSpawner.getItemMeta();
         mobMeta.setDisplayName(ChatColor.WHITE + capFirst(mob) + " Spawner");
@@ -62,16 +61,12 @@ public class Util
         p.getInventory().addItem(mobSpawner);
     }
 
-    public static String formatSpawner(String string) {
+    public String formatSpawner(String string) {
         string = string.replace("_", " ").toLowerCase();
         return string.substring(0,1).toUpperCase() + string.substring(1);
     }
 
-    public static String capFirst(String string) {
+    public String capFirst(String string) {
         return string.substring(0,1).toUpperCase() + string.substring(1);
-    }
-
-    public static void openInv(Player player) {
-        player.openInventory(shopInventory);
     }
 }
