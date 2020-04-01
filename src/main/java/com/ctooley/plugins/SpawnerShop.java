@@ -1,5 +1,7 @@
 package com.ctooley.plugins;
 
+import java.util.HashMap;
+
 import com.ctooley.plugins.commands.Commands;
 import com.ctooley.plugins.listeners.ShopListeners;
 import com.ctooley.plugins.listeners.SignListener;
@@ -10,7 +12,6 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-import java.util.*;
 
 public class SpawnerShop extends JavaPlugin 
 {
