@@ -53,12 +53,19 @@ public class Util
         player.openInventory(shopInventory);
     }
 
-    public void giveSpawner(Player p, String mob) {
+    public void giveSpawner(Player player, String mob) {
+
+        if (!(player.hasPermission("spawnershop.give"))) 
+        {
+            player.sendMessage(ChatColor.RED + "No permission!");
+            return;
+        } 
+
         ItemStack mobSpawner = new ItemStack(Material.SPAWNER);
         ItemMeta mobMeta = mobSpawner.getItemMeta();
         mobMeta.setDisplayName(ChatColor.WHITE + capFirst(mob) + " Spawner");
         mobSpawner.setItemMeta(mobMeta);
-        p.getInventory().addItem(mobSpawner);
+        player.getInventory().addItem(mobSpawner);
     }
 
     public String formatSpawner(String string) {
