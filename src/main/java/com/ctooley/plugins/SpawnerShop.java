@@ -4,11 +4,11 @@ import com.ctooley.plugins.commands.Commands;
 import com.ctooley.plugins.listeners.ShopListeners;
 import com.ctooley.plugins.listeners.SignListener;
 import com.ctooley.plugins.util.Util;
+import com.ctooley.plugins.util.VaultAPI;
 
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import java.util.*;
 
@@ -16,6 +16,7 @@ public class SpawnerShop extends JavaPlugin
 {
 
     public static Economy economy = null;
+    public VaultAPI vaultAPI;
     public HashMap<String, Long> cooldown = new HashMap<>();
     public FileConfiguration config = getConfig();
     private Util util;
@@ -24,11 +25,15 @@ public class SpawnerShop extends JavaPlugin
     {
         initialiseConfig();
         util = new Util(config);
-        Bukkit.getServer().getPluginManager().registerEvents(new SignListener(this, util), this);
-        Bukkit.getServer().getPluginManager().registerEvents(new ShopListeners(this, util), this);
-        getCommand("spawners").setExecutor(new Commands(this, util));
-        setupEconomy();
+        vaultAPI = new VaultAPI(this);
+        registerListeners();
+        initialiseCommands();
         new Util(config);
+    }
+
+    public void onDisable() 
+    {
+
     }
 
     private void initialiseConfig() 
@@ -38,20 +43,14 @@ public class SpawnerShop extends JavaPlugin
         saveConfig();
     }
 
-    public void onDisable() 
+    private void initialiseCommands()
     {
-
+        getCommand("spawners").setExecutor(new Commands(this, util));
     }
-
-    private boolean setupEconomy() 
+    
+    private void registerListeners()
     {
-        RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(Economy.class);
-
-        if (economyProvider != null) 
-        {
-            economy = economyProvider.getProvider();
-        }
-
-        return economy != null;
+        Bukkit.getServer().getPluginManager().registerEvents(new SignListener(this, util), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new ShopListeners(this, util), this);
     }
 }
