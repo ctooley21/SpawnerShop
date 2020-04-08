@@ -20,7 +20,7 @@ public class SpawnerShop extends JavaPlugin
     public static Economy economy = null;
     public VaultAPI vaultAPI;
     public HashMap<String, Long> cooldown = new HashMap<>();
-    public FileConfiguration config = getConfig();
+    public FileConfiguration config;
     private Util util;
     public static String currencySign;
 
@@ -31,7 +31,6 @@ public class SpawnerShop extends JavaPlugin
         vaultAPI = new VaultAPI(this);
         registerListeners();
         initialiseCommands();
-        new Util(config);
         currencySign = config.getString("options.currencysign");
         setupEconomy();
     }
@@ -43,7 +42,7 @@ public class SpawnerShop extends JavaPlugin
 
     private void initialiseConfig() 
     {
-        FileConfiguration config = getConfig();
+        config = getConfig();
         config.options().copyDefaults(true);
         saveConfig();
     }
@@ -69,5 +68,15 @@ public class SpawnerShop extends JavaPlugin
         }
 
         return economy != null;
+    }
+
+    public void reload()
+    {
+        reloadConfig();
+        config = getConfig();
+        util = new Util(config);
+        registerListeners();
+        initialiseCommands();
+        currencySign = config.getString("options.currencysign");
     }
 }

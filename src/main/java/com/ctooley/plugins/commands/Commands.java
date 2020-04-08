@@ -53,14 +53,14 @@ public class Commands implements CommandExecutor {
 
     private void executeReloadCommand(Player player, String[] args)
     {
-        if (player.hasPermission("spawnershop.reload") || player.isOp()) 
+        if (!player.hasPermission("spawnershop.reload") && !player.isOp()) 
         {
-            util.sendMessage(player, true, plugin.config.getString("options.reloadsuccess"));
+            util.sendMessage(player, true, plugin.config.getString("options.nopermission"));
+            return;
         } 
-        else 
-        {
-            plugin.config.getString("options.nopermission");
-        }
+
+        util.sendMessage(player, true, plugin.config.getString("options.reloadsuccess"));
+        plugin.reload();
     }
 
     private void executeGeneralCommand(Player player)
