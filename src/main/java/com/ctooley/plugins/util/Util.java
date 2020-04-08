@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import com.ctooley.plugins.SpawnerShop;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -19,14 +21,18 @@ public class Util
 {
     private ConfigurationSection spawnerSection;
     private FileConfiguration config;
+    private String prefix;
 
     public Util(FileConfiguration config)
     {
-        if(this.config == null)
+        if(this.config != null)
         {
-            this.spawnerSection = config.getConfigurationSection("spawners");
-            this.config = config;
+            return;
         }
+
+        this.spawnerSection = config.getConfigurationSection("spawners");
+        this.config = config;
+        this.prefix = translateColors(config.getString("options.prefix"));
     }
 
     public void openInventory(Player player)
@@ -54,13 +60,6 @@ public class Util
     }
 
     public void giveSpawner(Player player, String mob) {
-
-        if (!(player.hasPermission("spawnershop.give"))) 
-        {
-            player.sendMessage(ChatColor.RED + "No permission!");
-            return;
-        } 
-
         ItemStack mobSpawner = new ItemStack(Material.SPAWNER);
         ItemMeta mobMeta = mobSpawner.getItemMeta();
         mobMeta.setDisplayName(ChatColor.WHITE + capFirst(mob) + " Spawner");
@@ -75,5 +74,50 @@ public class Util
 
     public String capFirst(String string) {
         return string.substring(0,1).toUpperCase() + string.substring(1);
+    }
+
+    public String translateColors(String string)
+    {
+        return ChatColor.translateAlternateColorCodes('&', string);
+    }
+
+    public void sendMessage(Player player, boolean prefix, String message)
+    {
+        if(prefix)
+        {
+            player.sendMessage(this.prefix + " " + translateColors(message));
+        }
+        else
+        {
+            player.sendMessage(translateColors(message));
+        }
+    }
+
+    public boolean isInt(String s) {
+        try {
+            Integer.parseInt(s);
+            return true;
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+    }
+
+    public boolean isSign(Material material)
+    {
+        return material.name().toLowerCase().contains("sign");
+    }
+
+    public void handleSale(Player player, boolean sale, int price, String spawner)
+    {   
+        if(sale)
+        {
+            sendMessage(player, false, ChatColor.GREEN + "" + config.getInt("spawners." + spawner + ".buy-price") + " has been taken from your account.");
+            SpawnerShop.economy.withdrawPlayer(player, price);
+        }
+        else
+        {
+            sendMessage(player, false, ChatColor.GREEN + "" + config.getInt("spawners." + spawner + ".sell-price") + " has been deposited into your account.");
+            SpawnerShop.economy.depositPlayer(player, price);
+        }
     }
 }

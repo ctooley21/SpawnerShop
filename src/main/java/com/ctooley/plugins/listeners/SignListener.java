@@ -1,6 +1,7 @@
 package com.ctooley.plugins.listeners;
 
 import com.ctooley.plugins.SpawnerShop;
+import com.ctooley.plugins.util.ShopSign;
 import com.ctooley.plugins.util.Util;
 
 import org.bukkit.ChatColor;
@@ -27,15 +28,6 @@ public class SignListener implements Listener {
         this.util = util;
     }
 
-    private boolean isInt(String s) {
-        try {
-            Integer.parseInt(s);
-            return true;
-        } catch (NumberFormatException ex) {
-            return false;
-        }
-    }
-
     @EventHandler
     public void onSignPlacement(SignChangeEvent e) {
         Player p = e.getPlayer();
@@ -44,15 +36,13 @@ public class SignListener implements Listener {
                 String line2 = e.getLine(1);
                 String line3 = e.getLine(2);
                 if (line2.equalsIgnoreCase("Buy")) {
-                    String price = e.getLine(3);
+                    String price = e.getLine(3).replace(plugin.config.getString("options.currencysign"), "");
 
                     ConfigurationSection spawnerSection = plugin.config.getConfigurationSection("spawners");
-                    if(spawnerSection.contains(line3)) {
+                    if(spawnerSection.contains(line3.toUpperCase())) {
                         e.setLine(0, ChatColor.BLUE + "[SpawnerShop]");
-                        e.setLine(1, "Buy");
-                        e.setLine(2, line3);
 
-                        if (isInt(price)) {
+                        if (util.isInt(price)) {
                             int price1 = Integer.parseInt(price);
                             e.setLine(3, plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(price1));
                         } else {
@@ -65,12 +55,10 @@ public class SignListener implements Listener {
                 } else if(line2.equalsIgnoreCase("Sell")) {
                     String price = e.getLine(3);
                     ConfigurationSection spawnerSection = plugin.config.getConfigurationSection("spawners");
-                    if(spawnerSection.contains(line3)) {
+                    if(spawnerSection.contains(line3.toUpperCase())) {
                         e.setLine(0, ChatColor.BLUE + "[SpawnerShop]");
-                        e.setLine(1, "Sell");
-                        e.setLine(2, line3);
 
-                        if (isInt(price)) {
+                        if (util.isInt(price)) {
                             int price1 = Integer.parseInt(price);
                             e.setLine(3, plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(price1));
                         } else {
@@ -84,7 +72,7 @@ public class SignListener implements Listener {
                    sendFormatMessage(e);
                 }
             } else {
-                p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix")) + " " + ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.nopermission")));
+                util.sendMessage(p, true, plugin.config.getString("options.nopermission"));
             }
         }
     }
@@ -93,60 +81,60 @@ public class SignListener implements Listener {
     public void onRightClick(PlayerInteractEvent e) 
     {
         Player p = e.getPlayer();
-        if(e.getClickedBlock() == null) return;
-        boolean isSign = isSign(e.getClickedBlock().getType());
-        if ((e.getAction() == Action.RIGHT_CLICK_BLOCK) && isSign) 
+        if(e.getClickedBlock() == null)
         {
-            Sign sign = (Sign) e.getClickedBlock().getState();
-            if (sign.getLine(0).equalsIgnoreCase(ChatColor.BLUE + "[SpawnerShop]")) 
+            return;
+        }
+        boolean isSign = util.isSign(e.getClickedBlock().getType());
+        if ((e.getAction() != Action.RIGHT_CLICK_BLOCK) || !isSign) return;
+
+        ShopSign sign = new ShopSign((Sign) e.getClickedBlock().getState());
+        if (!sign.isValid()) return;
+
+        if ((!p.hasPermission("spawnershop.signs.use")) && !p.isOp()) 
+        {
+            util.sendMessage(p, true, plugin.config.getString("options.nopermission"));
+            return;
+        }
+
+        String spawner = sign.getSpawnerType();
+        String method = sign.getMethod();
+        if(!p.hasPermission("spawnershop." + method + "." + spawner.toLowerCase()) && !p.hasPermission("spawnershop." + method + ".all")) 
+        {
+            util.sendMessage(p, true, plugin.config.getString("options.nopermission"));
+            return;
+        }
+        
+        int price = sign.getPrice();
+        if (method.equalsIgnoreCase("Buy"))
+        {
+            if(SpawnerShop.economy.getBalance(p) >= price) {
+                SpawnerShop.economy.withdrawPlayer(p, price);
+                util.giveSpawner(p, spawner);
+                p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(price) + " has been taken from your account.");
+            }
+            else 
             {
-                if ((p.hasPermission("spawnershop.signs.use")) || (p.isOp())) 
+                util.sendMessage(p, true, plugin.config.getString("options.nomoney"));
+            }
+        }
+        else 
+        {
+            if(p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().getType() != Material.AIR) 
+            {
+                if(p.getInventory().getItemInMainHand().getType() == Material.SPAWNER) 
                 {
-                    String spawner = sign.getLine(2).toLowerCase();
-                    String method = sign.getLine(1).toLowerCase();
-                    if(!p.hasPermission("spawnershop." + method + "." + spawner.toLowerCase()) && !p.hasPermission("spawnershop." + method + ".all")) 
+                    if(!p.getInventory().getItemInMainHand().hasItemMeta() || !p.getInventory().getItemInMainHand().getItemMeta().hasDisplayName()) return;
+                    String name = p.getInventory().getItemInMainHand().getItemMeta().getDisplayName();
+                    if(name.contains(ChatColor.COLOR_CHAR+"")) 
                     {
-                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix")) + " " + ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.nopermission")));
-                        return;
-                    }
-                    String line3 = sign.getLine(2);
-                    String error = ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix")) + " " + ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.nomoney"));
-                    String price = sign.getLine(3);
-                    price = price.replace(plugin.config.getString("options.currencysign"), "");
-                    price = price.replace(",", "");
-                    int realPrice = Integer.parseInt(price);
-                    if (sign.getLine(1).equalsIgnoreCase("Buy")) {
-                        if(SpawnerShop.economy.getBalance(p) >= realPrice) {
-                            SpawnerShop.economy.withdrawPlayer(p, realPrice);
-                            util.giveSpawner(p, line3);
-                            p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(realPrice) + " has been taken from your account.");
-                        }else {
-                            p.sendMessage(error);
-                        }
-                    }else 
-                    {
-                        if(p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().getType() != Material.AIR) 
+                        if(ChatColor.stripColor(name).replace(" Spawner","").equalsIgnoreCase(spawner)) 
                         {
-                            if(p.getInventory().getItemInMainHand().getType() == Material.SPAWNER) 
-                            {
-                                if(!p.getInventory().getItemInMainHand().hasItemMeta()) return;
-                                if(!p.getInventory().getItemInMainHand().getItemMeta().hasDisplayName()) return;
-                                String name = p.getInventory().getItemInMainHand().getItemMeta().getDisplayName();
-                                if(name.contains(ChatColor.COLOR_CHAR+"")) 
-                                {
-                                    if(ChatColor.stripColor(name).replace(" Spawner","").equalsIgnoreCase(line3)) 
-                                    {
-                                        p.getInventory().getItemInMainHand().setAmount(p.getInventory().getItemInMainHand().getAmount()-1);
-                                        SpawnerShop.economy.depositPlayer(p, realPrice);
-                                        p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(realPrice) + " has been deposited into your account.");
-                                    }
-                                }
-                            }
+                            p.getInventory().getItemInMainHand().setAmount(p.getInventory().getItemInMainHand().getAmount()-1);
+                            SpawnerShop.economy.depositPlayer(p, price);
+                            p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(price) + " has been deposited into your account.");
                         }
                     }
-                } else 
-                {
-                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix")) + " " + ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.nopermission")));
                 }
             }
         }
@@ -161,10 +149,5 @@ public class SignListener implements Listener {
         e.setLine(1, "Buy/Sell");
         e.setLine(2, "<MobType>");
         e.setLine(3, "Price");
-    }
-
-    private boolean isSign(Material material)
-    {
-        return material.name().toLowerCase().contains("sign");
     }
 }

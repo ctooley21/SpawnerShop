@@ -3,6 +3,7 @@ package com.ctooley.plugins.listeners;
 import com.ctooley.plugins.SpawnerShop;
 import com.ctooley.plugins.util.Util;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -15,9 +16,6 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitScheduler;
-
-import java.text.NumberFormat;
-import java.util.Locale;
 
 public class ShopListeners implements Listener {
 
@@ -47,9 +45,9 @@ public class ShopListeners implements Listener {
                 return;
             }
             if(SpawnerShop.economy.getBalance(player) >= plugin.getConfig().getInt("spawners." + spawner + ".buy-price")) {
-                SpawnerShop.economy.withdrawPlayer(player, plugin.getConfig().getInt("spawners." + spawner + ".buy-price"));
+                int price = plugin.getConfig().getInt("spawners." + spawner + ".buy-price");
+                util.handleSale(player, true, price, spawner);
                 util.giveSpawner(player, spawner);
-                player.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(plugin.getConfig().getInt("spawners." + spawner + ".buy-price")) + " has been taken from your account.");
                 player.closeInventory();
                 plugin.cooldown.put(player.getName(), System.currentTimeMillis());
             }else {
@@ -66,15 +64,26 @@ public class ShopListeners implements Listener {
         if (!e.getItemInHand().getItemMeta().hasDisplayName()) return;
 
         Block block = e.getBlock();
+        String name = e.getItemInHand().getItemMeta().getDisplayName();
         BukkitScheduler scheduler = plugin.getServer().getScheduler();
-            scheduler.scheduleSyncDelayedTask(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    if(!(block.getState() instanceof CreatureSpawner)) return;
-                    CreatureSpawner spawner = (CreatureSpawner) block.getState();
-                    spawner.setSpawnedType(EntityType.BLAZE);
-                    spawner.update();
-                }
-            }, 1L);
+        scheduler.scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                if(!(block.getState() instanceof CreatureSpawner)) return;
+                CreatureSpawner spawner = (CreatureSpawner) block.getState();
+                EntityType entityType = getEntityType(name.replace(" Spawner", ""));
+                spawner.setSpawnedType(entityType);
+                spawner.update();
+            }
+        }, 1L);
+    }
+
+    public EntityType getEntityType(String spawner)
+    {
+        for(EntityType type : EntityType.values())
+        {
+            if(type.getKey().getKey().equalsIgnoreCase(spawner)) return type;
+        }
+        return null;
     }
 }

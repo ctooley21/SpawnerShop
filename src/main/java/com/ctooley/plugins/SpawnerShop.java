@@ -11,6 +11,7 @@ import com.ctooley.plugins.util.VaultAPI;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class SpawnerShop extends JavaPlugin 
@@ -21,6 +22,7 @@ public class SpawnerShop extends JavaPlugin
     public HashMap<String, Long> cooldown = new HashMap<>();
     public FileConfiguration config = getConfig();
     private Util util;
+    public static String currencySign;
 
     public void onEnable() 
     {
@@ -30,6 +32,8 @@ public class SpawnerShop extends JavaPlugin
         registerListeners();
         initialiseCommands();
         new Util(config);
+        currencySign = config.getString("options.currencysign");
+        setupEconomy();
     }
 
     public void onDisable() 
@@ -53,5 +57,17 @@ public class SpawnerShop extends JavaPlugin
     {
         Bukkit.getServer().getPluginManager().registerEvents(new SignListener(this, util), this);
         Bukkit.getServer().getPluginManager().registerEvents(new ShopListeners(this, util), this);
+    }
+
+    private boolean setupEconomy() 
+    {
+        RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(Economy.class);
+
+        if (economyProvider != null) 
+        {
+            economy = economyProvider.getProvider();
+        }
+
+        return economy != null;
     }
 }

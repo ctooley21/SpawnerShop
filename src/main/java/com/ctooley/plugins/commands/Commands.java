@@ -55,17 +55,11 @@ public class Commands implements CommandExecutor {
     {
         if (player.hasPermission("spawnershop.reload") || player.isOp()) 
         {
-            player.sendMessage(
-                    ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix"))
-                            + " " + ChatColor.translateAlternateColorCodes('&',
-                                    plugin.config.getString("options.reloadsuccess")));
+            util.sendMessage(player, true, plugin.config.getString("options.reloadsuccess"));
         } 
         else 
         {
-            player.sendMessage(
-                    ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix"))
-                            + " " + ChatColor.translateAlternateColorCodes('&',
-                                    plugin.config.getString("options.nopermission")));
+            plugin.config.getString("options.nopermission");
         }
     }
 
@@ -76,29 +70,18 @@ public class Commands implements CommandExecutor {
                 int cooldown_time = plugin.config.getInt("options.cooldown");
                 long diff = (System.currentTimeMillis() - plugin.cooldown.get(player.getName())) / 1000L;
                 if (diff < cooldown_time) {
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                            plugin.config.getString("options.prefix")) + " "
-                            + ChatColor.translateAlternateColorCodes('&',
-                                    plugin.config.getString("options.cooldownmessage")));
+                    util.sendMessage(player, true, plugin.config.getString("options.cooldownmessage"));
                 } else {
                     util.openInventory(player);
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                            plugin.config.getString("options.prefix")) + " "
-                            + ChatColor.translateAlternateColorCodes('&',
-                                    plugin.config.getString("options.openmessage")));
+                    util.sendMessage(player, true, plugin.config.getString("options.openmessage"));
                     plugin.cooldown.remove(player.getName());
                 }
             } else {
                 util.openInventory(player);
-                player.sendMessage(
-                        ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix"))
-                                + " " + ChatColor.translateAlternateColorCodes('&',
-                                        plugin.config.getString("options.openmessage")));
+                util.sendMessage(player, true, plugin.config.getString("options.openmessage"));
             }
         } else {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix"))
-                    + " " + ChatColor.translateAlternateColorCodes('&',
-                            plugin.config.getString("options.nopermission")));
+            util.sendMessage(player, true, plugin.config.getString("options.nopermission"));
         }
     }
 }
