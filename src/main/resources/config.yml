@@ -1,15 +1,15 @@
 options:
   shopname: Spawner Shop
-  openmessage: '&aOpening Spawner Shop'
-  signsuccess: '&3You have sucessfully created a SpawnerShop sign!'
+  openmessage: '&9Opening the shop inventory.'
+  signsuccess: '&9You have sucessfully created a SpawnerShop sign!'
   inventorysize: 54
-  nopermission: '&aYou do not have permission to do that!'
+  nopermission: '&9You do not have permission to do that.'
   cooldown: 10
-  cooldownmessage: '&aYou can not use that command yet!'
+  cooldownmessage: '&9You can not use that command yet!'
   currencysign: $
-  reloadsuccess: '&aYou have successfully reloaded SpawnerShop!'
-  prefix: '&7[&eSpawnerShop&7]'
-  nomoney: '&aYou do not have enough funds!'
+  reloadsuccess: '&9You have successfully reloaded the plugin.'
+  prefix: '&7[&cSS&7]'
+  nomoney: '&9You do not have enough funds!'
 spawners:
   ENDERMAN:
     enabled: true

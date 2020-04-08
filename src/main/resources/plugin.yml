@@ -7,6 +7,7 @@ commands:
   spawners:
     description: This is the main command!
     usage: /<command> 
+    aliases: sshop
 permissions:
   spawnershop.use:
     description: Gives access to the command /spawners
