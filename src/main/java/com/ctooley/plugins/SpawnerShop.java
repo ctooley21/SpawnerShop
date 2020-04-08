@@ -1,32 +1,44 @@
 package com.ctooley.plugins;
 
+import java.util.HashMap;
+
 import com.ctooley.plugins.commands.Commands;
 import com.ctooley.plugins.listeners.ShopListeners;
 import com.ctooley.plugins.listeners.SignListener;
 import com.ctooley.plugins.util.Util;
+import com.ctooley.plugins.util.VaultAPI;
 
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-import java.util.*;
 
 public class SpawnerShop extends JavaPlugin 
 {
 
     public static Economy economy = null;
+    public VaultAPI vaultAPI;
     public HashMap<String, Long> cooldown = new HashMap<>();
     public FileConfiguration config = getConfig();
+    private Util util;
+    public static String currencySign;
 
     public void onEnable() 
     {
-        Bukkit.getServer().getPluginManager().registerEvents(new SignListener(this), this);
-        Bukkit.getServer().getPluginManager().registerEvents(new ShopListeners(this), this);
         initialiseConfig();
-        getCommand("spawners").setExecutor(new Commands(this));
-        setupEconomy();
+        util = new Util(config);
+        vaultAPI = new VaultAPI(this);
+        registerListeners();
+        initialiseCommands();
         new Util(config);
+        currencySign = config.getString("options.currencysign");
+        setupEconomy();
+    }
+
+    public void onDisable() 
+    {
+
     }
 
     private void initialiseConfig() 
@@ -36,9 +48,15 @@ public class SpawnerShop extends JavaPlugin
         saveConfig();
     }
 
-    public void onDisable() 
+    private void initialiseCommands()
     {
-
+        getCommand("spawners").setExecutor(new Commands(this, util));
+    }
+    
+    private void registerListeners()
+    {
+        Bukkit.getServer().getPluginManager().registerEvents(new SignListener(this, util), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new ShopListeners(this, util), this);
     }
 
     private boolean setupEconomy() 
