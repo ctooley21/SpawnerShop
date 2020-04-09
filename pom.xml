@@ -67,6 +67,11 @@
          <id>CodeMC</id>
          <url>https://repo.codemc.org/repository/maven-public</url>
        </repository>
+       <!-- This adds the Reserve Maven repository -->
+       <repository>
+         <id>reserve-repo</id>
+         <url>https://dl.bintray.com/theneweconomy/java/</url>
+     </repository>
    </repositories>
    <dependencies>
       <!--This adds the Spigot API artifact -->
@@ -82,13 +87,20 @@
          <artifactId>VaultAPI</artifactId>
          <version>1.7</version>
          <scope>provided</scope>
-     </dependency>
+      </dependency>
       <!--This adds the bStats artifact -->  
-     <dependency>
+      <dependency>
          <groupId>org.bstats</groupId>
          <artifactId>bstats-bukkit</artifactId>
          <version>1.7</version>
          <scope>compile</scope>
-    </dependency>
+      </dependency>
+      <!--This adds the Reserve artifact -->  
+      <dependency>
+         <groupId>net.tnemc</groupId>
+         <artifactId>Reserve</artifactId>
+         <version>0.1.4.6</version>
+         <scope>provided</scope>
+      </dependency>
    </dependencies>
 </project>

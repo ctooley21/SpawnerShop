@@ -107,12 +107,12 @@ public class Util
         if(sale)
         {
             sendMessage(player, false, ChatColor.GREEN + "" + config.getInt("spawners." + spawner + ".buy-price") + " has been taken from your account.");
-            SpawnerShop.economy.withdrawPlayer(player, price);
+            SpawnerShop.economy.withdraw(player, price);
         }
         else
         {
             sendMessage(player, false, ChatColor.GREEN + "" + config.getInt("spawners." + spawner + ".sell-price") + " has been deposited into your account.");
-            SpawnerShop.economy.depositPlayer(player, price);
+            SpawnerShop.economy.deposit(player, price);
         }
     }
 }
