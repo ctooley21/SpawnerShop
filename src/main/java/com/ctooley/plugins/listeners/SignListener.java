@@ -109,7 +109,7 @@ public class SignListener implements Listener {
         if (method.equalsIgnoreCase("Buy"))
         {
             if(SpawnerShop.economy.getBalance(p) >= price) {
-                SpawnerShop.economy.withdrawPlayer(p, price);
+                SpawnerShop.economy.withdraw(p, price);
                 util.giveSpawner(p, spawner);
                 p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(price) + " has been taken from your account.");
             }
@@ -131,7 +131,7 @@ public class SignListener implements Listener {
                         if(ChatColor.stripColor(name).replace(" Spawner","").equalsIgnoreCase(spawner)) 
                         {
                             p.getInventory().getItemInMainHand().setAmount(p.getInventory().getItemInMainHand().getAmount()-1);
-                            SpawnerShop.economy.depositPlayer(p, price);
+                            SpawnerShop.economy.deposit(p, price);
                             p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(price) + " has been deposited into your account.");
                         }
                     }

@@ -1,26 +1,23 @@
 package com.ctooley.plugins;
 
 import java.util.HashMap;
+import java.util.logging.Level;
 
 import com.ctooley.plugins.commands.Commands;
+import com.ctooley.plugins.economy.ShopEconomy;
 import com.ctooley.plugins.listeners.ShopListeners;
 import com.ctooley.plugins.listeners.SignListener;
 import com.ctooley.plugins.util.Util;
-import com.ctooley.plugins.util.VaultAPI;
-
-import net.milkbowl.vault.economy.Economy;
 
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class SpawnerShop extends JavaPlugin 
 {
 
-    public static Economy economy = null;
-    public VaultAPI vaultAPI;
+    public static ShopEconomy economy = null;
     public HashMap<String, Long> cooldown = new HashMap<>();
     public FileConfiguration config;
     private Util util;
@@ -30,12 +27,11 @@ public class SpawnerShop extends JavaPlugin
     {
         initialiseConfig();
         util = new Util(config);
-        vaultAPI = new VaultAPI(this);
         registerListeners();
         initialiseCommands();
         currencySign = config.getString("options.currencysign");
-        setupEconomy();
         enableMetrics();
+        initialiseEconomy();
     }
 
     public void onDisable() 
@@ -61,18 +57,6 @@ public class SpawnerShop extends JavaPlugin
         Bukkit.getServer().getPluginManager().registerEvents(new ShopListeners(this, util), this);
     }
 
-    private boolean setupEconomy() 
-    {
-        RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(Economy.class);
-
-        if (economyProvider != null) 
-        {
-            economy = economyProvider.getProvider();
-        }
-
-        return economy != null;
-    }
-
     public void reload()
     {
         reloadConfig();
@@ -87,5 +71,21 @@ public class SpawnerShop extends JavaPlugin
     {
         int pluginId = 7068;
         new Metrics(this, pluginId);
+    }
+
+    public void initialiseEconomy()
+    {
+        economy = new ShopEconomy(this);
+        if(!economy.enabled)
+        {
+            //log that no valid economy setup found.
+            Bukkit.getLogger().log(Level.INFO, "Setup bad economy");
+            economy = null;
+            cooldown = null;
+            config = null;
+            util = null;
+            currencySign = null;
+            Bukkit.getPluginManager().disablePlugin(this);
+        }
     }
 }
