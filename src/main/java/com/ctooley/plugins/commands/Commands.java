@@ -22,30 +22,32 @@ public class Commands implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) 
     {
-        if (sender instanceof Player) 
+        if (!(sender instanceof Player))
         {
-            Player player = (Player) sender;
-            if (args.length == 0) 
+            return true;
+        }
+
+        Player player = (Player) sender;
+        if (args.length == 0) 
+        {
+            executeGeneralCommand(player);
+        } 
+        else if (args.length == 1) 
+        {
+            if (args[0].equalsIgnoreCase("reload")) 
             {
-                executeGeneralCommand(player);
+                executeReloadCommand(player, args);
             } 
-            else if (args.length == 1) 
+            else if (args[0].equalsIgnoreCase("give")) 
             {
-                if (args[0].equalsIgnoreCase("reload")) 
-                {
-                    executeReloadCommand(player, args);
-                } 
-                else if (args[0].equalsIgnoreCase("give")) 
-                {
-                    player.sendMessage(ChatColor.GREEN + "Please choose a spawner type!");
-                }
-            } 
-            else if (args.length == 2) 
+                player.sendMessage(ChatColor.GREEN + "Please choose a spawner type!");
+            }
+        } 
+        else if (args.length == 2) 
+        {
+            if (args[0].equalsIgnoreCase("give")) 
             {
-                if (args[0].equalsIgnoreCase("give")) 
-                {
-                    util.giveSpawner(player, args[1]);
-                }
+                util.giveSpawner(player, args[1]);
             }
         }
         return true;
@@ -65,23 +67,28 @@ public class Commands implements CommandExecutor {
 
     private void executeGeneralCommand(Player player)
     {
-        if (player.hasPermission("spawnershop.use")) {
-            if (plugin.cooldown.containsKey(player.getName()) && !player.isOp()) {
-                int cooldown_time = plugin.config.getInt("options.cooldown");
-                long diff = (System.currentTimeMillis() - plugin.cooldown.get(player.getName())) / 1000L;
-                if (diff < cooldown_time) {
-                    util.sendMessage(player, true, plugin.config.getString("options.cooldownmessage"));
-                } else {
-                    util.openInventory(player);
-                    util.sendMessage(player, true, plugin.config.getString("options.openmessage"));
-                    plugin.cooldown.remove(player.getName());
-                }
+        if (!player.hasPermission("spawnershop.use")) 
+        {
+            util.sendMessage(player, true, plugin.config.getString("options.nopermission"));
+            return;
+        } 
+
+        if (plugin.cooldown.containsKey(player.getName()) && !player.isOp()) 
+        {
+            int cooldown_time = plugin.config.getInt("options.cooldown");
+            long diff = (System.currentTimeMillis() - plugin.cooldown.get(player.getName())) / 1000L;
+            if (diff < cooldown_time) {
+                util.sendMessage(player, true, plugin.config.getString("options.cooldownmessage"));
             } else {
                 util.openInventory(player);
                 util.sendMessage(player, true, plugin.config.getString("options.openmessage"));
+                plugin.cooldown.remove(player.getName());
             }
-        } else {
-            util.sendMessage(player, true, plugin.config.getString("options.nopermission"));
+        } 
+        else 
+        {
+            util.openInventory(player);
+            util.sendMessage(player, true, plugin.config.getString("options.openmessage"));
         }
     }
 }
