@@ -1,11 +1,6 @@
 package com.ctooley.plugins.economy;
 
 import java.math.BigDecimal;
-import java.util.logging.Level;
-
-import com.ctooley.plugins.SpawnerShop;
-
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import net.tnemc.core.Reserve;

@@ -1,7 +1,5 @@
 package com.ctooley.plugins.economy;
 
-import java.util.logging.Level;
-
 import com.ctooley.plugins.SpawnerShop;
 
 import org.bukkit.Bukkit;
