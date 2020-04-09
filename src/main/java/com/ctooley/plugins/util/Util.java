@@ -25,11 +25,6 @@ public class Util
 
     public Util(FileConfiguration config)
     {
-        if(this.config != null)
-        {
-            return;
-        }
-
         this.spawnerSection = config.getConfigurationSection("spawners");
         this.config = config;
         this.prefix = translateColors(config.getString("options.prefix"));

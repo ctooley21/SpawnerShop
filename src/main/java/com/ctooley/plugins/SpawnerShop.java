@@ -9,6 +9,8 @@ import com.ctooley.plugins.util.Util;
 import com.ctooley.plugins.util.VaultAPI;
 
 import net.milkbowl.vault.economy.Economy;
+
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -33,6 +35,7 @@ public class SpawnerShop extends JavaPlugin
         initialiseCommands();
         currencySign = config.getString("options.currencysign");
         setupEconomy();
+        enableMetrics();
     }
 
     public void onDisable() 
@@ -78,5 +81,11 @@ public class SpawnerShop extends JavaPlugin
         registerListeners();
         initialiseCommands();
         currencySign = config.getString("options.currencysign");
+    }
+
+    public void enableMetrics()
+    {
+        int pluginId = 7068;
+        new Metrics(this, pluginId);
     }
 }
