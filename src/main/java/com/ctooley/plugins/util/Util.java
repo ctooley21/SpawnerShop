@@ -102,17 +102,25 @@ public class Util
         return material.name().toLowerCase().contains("sign");
     }
 
-    public void handleSale(Player player, boolean sale, int price, String spawner)
+    public void handleSale(Player player, boolean sale, String spawner)
     {   
+        String message;
+        String spawnerPath = spawner.toUpperCase().replace(" ", "_");
+        int price;
+
         if(sale)
         {
-            sendMessage(player, false, ChatColor.GREEN + "" + config.getInt("spawners." + spawner + ".buy-price") + " has been taken from your account.");
+            message = config.getString("options.salemessage");
+            price = config.getInt("spawners." + spawnerPath + ".buy-price");
             SpawnerShop.economy.withdraw(player, price);
         }
         else
         {
-            sendMessage(player, false, ChatColor.GREEN + "" + config.getInt("spawners." + spawner + ".sell-price") + " has been deposited into your account.");
+            message = config.getString("options.buymessage");
+            price = config.getInt("spawners." + spawnerPath + ".sale-price");
             SpawnerShop.economy.deposit(player, price);
         }
+
+        sendMessage(player, false, message.replace("{currency}", config.getString("options.currencysign")).replace("{amount}", price+""));
     }
 }

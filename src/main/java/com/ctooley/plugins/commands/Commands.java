@@ -78,7 +78,7 @@ public class Commands implements CommandExecutor {
             int cooldown_time = plugin.config.getInt("options.cooldown");
             long diff = (System.currentTimeMillis() - plugin.cooldown.get(player.getName())) / 1000L;
             if (diff < cooldown_time) {
-                util.sendMessage(player, true, plugin.config.getString("options.cooldownmessage"));
+                util.sendMessage(player, true, plugin.config.getString("options.cooldownmessage").replace("{time}", (int)(cooldown_time-diff)+""));
             } else {
                 util.openInventory(player);
                 util.sendMessage(player, true, plugin.config.getString("options.openmessage"));
