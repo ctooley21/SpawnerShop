@@ -5,11 +5,13 @@ options:
   inventorysize: 54
   nopermission: '&9You do not have permission to do that.'
   cooldown: 10
-  cooldownmessage: '&9You can not use that command yet!'
+  cooldownmessage: '&9You must wait {time} seconds before using that command again.'
   currencysign: $
   reloadsuccess: '&9You have successfully reloaded the plugin.'
   prefix: '&7[&cSS&7]'
   nomoney: '&9You do not have enough funds!'
+  salemessage: '&9{currency}{amount} has been taken from your account.'
+  buymessage: '&9{currency}{amount} has been deposited into your account.'
 spawners:
   ENDERMAN:
     enabled: true
