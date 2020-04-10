@@ -21,12 +21,16 @@ public class Util
 {
     private ConfigurationSection spawnerSection;
     private FileConfiguration config;
+    private FileConfiguration spawners;
     private String prefix;
+    private SpawnerShop spawnerShop;
 
-    public Util(FileConfiguration config)
+    public Util(SpawnerShop spawnerShop, FileConfiguration config, FileConfiguration spawners)
     {
-        this.spawnerSection = config.getConfigurationSection("spawners");
+        this.spawnerShop = spawnerShop;
+        this.spawnerSection = spawners.getConfigurationSection("spawners");
         this.config = config;
+        this.spawners = spawners;
         this.prefix = translateColors(config.getString("options.prefix"));
     }
 
@@ -36,7 +40,7 @@ public class Util
 
         for(String spawnerKey : spawnerSection.getKeys(false)) 
         {
-            if(!config.getBoolean("spawners." + spawnerKey + ".enabled"))
+            if(!spawners.getBoolean("spawners." + spawnerKey + ".enabled"))
             {
                 continue;
             }
@@ -45,7 +49,7 @@ public class Util
             ItemMeta spawnerMeta = spawner.getItemMeta();
             spawnerMeta.setDisplayName(ChatColor.WHITE + formatSpawner(spawnerKey) + " Spawner");
             List<String> lore = new ArrayList<>();
-            lore.add(ChatColor.GREEN + "Price: " + config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(config.getInt("spawners." + spawnerKey + ".buy-price")));
+            lore.add(ChatColor.GREEN + "Price: " + config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(spawners.getInt("spawners." + spawnerKey + ".buy-price")));
             spawnerMeta.setLore(lore);
             spawner.setItemMeta(spawnerMeta);
             shopInventory.addItem(spawner);
@@ -111,14 +115,14 @@ public class Util
         if(sale)
         {
             message = config.getString("options.salemessage");
-            price = config.getInt("spawners." + spawnerPath + ".buy-price");
-            SpawnerShop.economy.withdraw(player, price);
+            price = spawners.getInt("spawners." + spawnerPath + ".buy-price");
+            spawnerShop.economy.withdraw(player, price);
         }
         else
         {
             message = config.getString("options.buymessage");
-            price = config.getInt("spawners." + spawnerPath + ".sale-price");
-            SpawnerShop.economy.deposit(player, price);
+            price = spawners.getInt("spawners." + spawnerPath + ".sale-price");
+            spawnerShop.economy.deposit(player, price);
         }
 
         sendMessage(player, false, message.replace("{currency}", config.getString("options.currencysign")).replace("{amount}", price+""));

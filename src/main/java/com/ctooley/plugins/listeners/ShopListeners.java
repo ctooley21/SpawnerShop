@@ -43,7 +43,7 @@ public class ShopListeners implements Listener {
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix")) + " " + ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.nopermission")));
                 return;
             }
-            if(SpawnerShop.economy.getBalance(player) >= plugin.getConfig().getInt("spawners." + spawner.toUpperCase().replace(" ", "_") + ".buy-price")) {
+            if(plugin.economy.getBalance(player) >= plugin.spawnerFile.getConfig().getInt("spawners." + spawner.toUpperCase().replace(" ", "_") + ".buy-price")) {
                 util.handleSale(player, true, spawner);
                 util.giveSpawner(player, spawner);
                 player.closeInventory();
