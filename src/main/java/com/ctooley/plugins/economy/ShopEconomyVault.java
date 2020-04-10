@@ -1,5 +1,7 @@
 package com.ctooley.plugins.economy;
 
+import java.util.logging.Level;
+
 import com.ctooley.plugins.SpawnerShop;
 
 import org.bukkit.entity.Player;
@@ -25,10 +27,12 @@ public class ShopEconomyVault {
         try {
 			RegisteredServiceProvider<Economy> provider = spawnerShop.getServer().getServicesManager().getRegistration(Economy.class);
 			if (provider != null) {
-				vault = provider.getProvider();
+                vault = provider.getProvider();
+                spawnerShop.logger.Log(Level.INFO, "Successfully loaded Vault economy provider.");
 				return true;
             }
-		} catch (NoClassDefFoundError ex) {}
+        } catch (NoClassDefFoundError ex) {}
+        spawnerShop.logger.Log(Level.INFO, "Vault and/or a valid economy provider not found.");
         return false;
     }
 

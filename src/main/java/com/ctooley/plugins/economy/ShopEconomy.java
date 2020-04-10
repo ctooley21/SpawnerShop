@@ -34,7 +34,7 @@ public class ShopEconomy {
 
         if(Bukkit.getPluginManager().getPlugin("Reserve") != null)
         {
-            reserve = new ShopEconomyReserve();
+            reserve = new ShopEconomyReserve(plugin);
             if(reserve.enabled)
             {
                 api = API.RESERVE;

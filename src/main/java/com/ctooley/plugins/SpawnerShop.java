@@ -7,6 +7,7 @@ import com.ctooley.plugins.commands.Commands;
 import com.ctooley.plugins.economy.ShopEconomy;
 import com.ctooley.plugins.listeners.ShopListeners;
 import com.ctooley.plugins.listeners.SignListener;
+import com.ctooley.plugins.util.Logger;
 import com.ctooley.plugins.util.Util;
 
 import org.bstats.bukkit.Metrics;
@@ -22,10 +23,12 @@ public class SpawnerShop extends JavaPlugin
     public FileConfiguration config;
     private Util util;
     public static String currencySign;
+    public Logger logger;
 
     public void onEnable() 
     {
         initialiseConfig();
+        logger = new Logger(this);
         util = new Util(config);
         registerListeners();
         initialiseCommands();
@@ -78,8 +81,8 @@ public class SpawnerShop extends JavaPlugin
         economy = new ShopEconomy(this);
         if(!economy.enabled)
         {
-            //log that no valid economy setup found.
-            Bukkit.getLogger().log(Level.INFO, "Setup bad economy");
+            logger.Log(Level.SEVERE, "No economy plugin found! Please install either Vault or Reserve and a valid economy provider.");
+            logger.Log(Level.SEVERE, "Disabling SpawnerShop.");
             economy = null;
             cooldown = null;
             config = null;
