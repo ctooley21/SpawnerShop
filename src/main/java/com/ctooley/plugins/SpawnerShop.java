@@ -8,6 +8,7 @@ import com.ctooley.plugins.economy.ShopEconomy;
 import com.ctooley.plugins.listeners.ShopListeners;
 import com.ctooley.plugins.listeners.SignListener;
 import com.ctooley.plugins.util.Logger;
+import com.ctooley.plugins.util.SpawnerFile;
 import com.ctooley.plugins.util.Util;
 
 import org.bstats.bukkit.Metrics;
@@ -18,18 +19,20 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class SpawnerShop extends JavaPlugin 
 {
 
-    public static ShopEconomy economy = null;
-    public HashMap<String, Long> cooldown = new HashMap<>();
-    public FileConfiguration config;
+    public ShopEconomy economy = null;
     private Util util;
-    public static String currencySign;
     public Logger logger;
+    public SpawnerFile spawnerFile;
+
+    public HashMap<String, Long> cooldown = new HashMap<>();
+    public static String currencySign;
+    public FileConfiguration config;
 
     public void onEnable() 
     {
         initialiseConfig();
         logger = new Logger(this);
-        util = new Util(config);
+        util = new Util(this, config, spawnerFile.getConfig());
         registerListeners();
         initialiseCommands();
         currencySign = config.getString("options.currencysign");
@@ -47,6 +50,8 @@ public class SpawnerShop extends JavaPlugin
         config = getConfig();
         config.options().copyDefaults(true);
         saveConfig();
+
+        spawnerFile = new SpawnerFile(this);
     }
 
     private void initialiseCommands()
@@ -64,7 +69,8 @@ public class SpawnerShop extends JavaPlugin
     {
         reloadConfig();
         config = getConfig();
-        util = new Util(config);
+        spawnerFile = new SpawnerFile(this);
+        util = new Util(this, config, spawnerFile.getConfig());
         registerListeners();
         initialiseCommands();
         currencySign = config.getString("options.currencysign");

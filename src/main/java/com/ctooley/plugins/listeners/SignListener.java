@@ -38,7 +38,7 @@ public class SignListener implements Listener {
                 if (line2.equalsIgnoreCase("Buy")) {
                     String price = e.getLine(3).replace(plugin.config.getString("options.currencysign"), "");
 
-                    ConfigurationSection spawnerSection = plugin.config.getConfigurationSection("spawners");
+                    ConfigurationSection spawnerSection = plugin.spawnerFile.getConfig().getConfigurationSection("spawners");
                     if(spawnerSection.contains(line3.toUpperCase())) {
                         e.setLine(0, ChatColor.BLUE + "[SpawnerShop]");
 
@@ -47,7 +47,7 @@ public class SignListener implements Listener {
                             e.setLine(3, plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(price1));
                         } else {
                             p.sendMessage("You have either not entered a price, or entered one incorrectly. The price has been set to the one specified in the config!");
-                            e.setLine(3, plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(plugin.getConfig().getInt("spawners." + line3 + ".buy-price")));
+                            e.setLine(3, plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(spawnerSection.getInt(line3.toUpperCase() + ".buy-price")));
                         }
                     } else {
                         sendFormatMessage(e);
@@ -108,8 +108,8 @@ public class SignListener implements Listener {
         int price = sign.getPrice();
         if (method.equalsIgnoreCase("Buy"))
         {
-            if(SpawnerShop.economy.getBalance(p) >= price) {
-                SpawnerShop.economy.withdraw(p, price);
+            if(plugin.economy.getBalance(p) >= price) {
+                plugin.economy.withdraw(p, price);
                 util.giveSpawner(p, spawner);
                 p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(price) + " has been taken from your account.");
             }
@@ -131,7 +131,7 @@ public class SignListener implements Listener {
                         if(ChatColor.stripColor(name).replace(" Spawner","").equalsIgnoreCase(spawner)) 
                         {
                             p.getInventory().getItemInMainHand().setAmount(p.getInventory().getItemInMainHand().getAmount()-1);
-                            SpawnerShop.economy.deposit(p, price);
+                            plugin.economy.deposit(p, price);
                             p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(price) + " has been deposited into your account.");
                         }
                     }
