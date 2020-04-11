@@ -3,7 +3,6 @@ package com.ctooley.plugins.commands;
 import com.ctooley.plugins.SpawnerShop;
 import com.ctooley.plugins.util.Util;
 
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -40,7 +39,7 @@ public class Commands implements CommandExecutor {
             } 
             else if (args[0].equalsIgnoreCase("give")) 
             {
-                player.sendMessage(ChatColor.GREEN + "Please choose a spawner type!");
+                util.sendMessage(player, true, plugin.config.getString("options.no-spawner-selected"));
             }
         } 
         else if (args.length == 2) 
@@ -57,11 +56,11 @@ public class Commands implements CommandExecutor {
     {
         if (!player.hasPermission("spawnershop.reload") && !player.isOp()) 
         {
-            util.sendMessage(player, true, plugin.config.getString("options.nopermission"));
+            util.sendMessage(player, true, plugin.config.getString("options.no-permission"));
             return;
         } 
 
-        util.sendMessage(player, true, plugin.config.getString("options.reloadsuccess"));
+        util.sendMessage(player, true, plugin.config.getString("options.reload-success"));
         plugin.reload();
     }
 
@@ -69,26 +68,26 @@ public class Commands implements CommandExecutor {
     {
         if (!player.hasPermission("spawnershop.use")) 
         {
-            util.sendMessage(player, true, plugin.config.getString("options.nopermission"));
+            util.sendMessage(player, true, plugin.config.getString("options.no-permission"));
             return;
         } 
 
         if (plugin.cooldown.containsKey(player.getName()) && !player.isOp()) 
         {
-            int cooldown_time = plugin.config.getInt("options.cooldown");
+            int cooldownTime = plugin.config.getInt("options.cooldown");
             long diff = (System.currentTimeMillis() - plugin.cooldown.get(player.getName())) / 1000L;
-            if (diff < cooldown_time) {
-                util.sendMessage(player, true, plugin.config.getString("options.cooldownmessage").replace("{time}", (int)(cooldown_time-diff)+""));
+            if (diff < cooldownTime) {
+                util.sendMessage(player, true, plugin.config.getString("options.cooldown-message").replace("{time}", (int)(cooldownTime-diff)+""));
             } else {
                 util.openInventory(player);
-                util.sendMessage(player, true, plugin.config.getString("options.openmessage"));
+                util.sendMessage(player, true, plugin.config.getString("options.open-message"));
                 plugin.cooldown.remove(player.getName());
             }
         } 
         else 
         {
             util.openInventory(player);
-            util.sendMessage(player, true, plugin.config.getString("options.openmessage"));
+            util.sendMessage(player, true, plugin.config.getString("options.open-message"));
         }
     }
 }

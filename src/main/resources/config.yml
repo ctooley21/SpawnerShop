@@ -1,14 +1,16 @@
 options:
-  shopname: Spawner Shop
-  openmessage: '&9Opening the shop inventory.'
-  signsuccess: '&9You have sucessfully created a SpawnerShop sign!'
-  inventorysize: 54
-  nopermission: '&9You do not have permission to do that.'
+  shop-name: Spawner Shop
+  open-message: '&9Opening the shop inventory.'
+  sign-success: '&9You have sucessfully created a SpawnerShop sign!'
+  inventory-size: 54
+  no-permission: '&9You do not have permission to do that.'
   cooldown: 10
-  cooldownmessage: '&9You must wait {time} seconds before using that command again.'
-  currencysign: $
-  reloadsuccess: '&9You have successfully reloaded the plugin.'
+  cooldown-message: '&9You must wait {time} seconds before using that command again.'
+  currency-sign: $
+  reload-success: '&9You have successfully reloaded the plugin.'
   prefix: '&7[&cSS&7]'
-  nomoney: '&9You do not have the {currency}{money} required to purchase that!'
-  salemessage: '&9{currency}{amount} has been taken from your account.'
-  buymessage: '&9{currency}{amount} has been deposited into your account.'
+  no-money: '&9You do not have the {currency}{money} required to purchase that!'
+  sale-message: '&9{currency}{amount} has been taken from your account.'
+  buy-message: '&9{currency}{amount} has been deposited into your account.'
+  no-spawner-selected: '&9Please choose a spawner type!'
+  invalid-price: '&9You have either not entered a price, or entered one incorrectly. The price has been set to the one specified in the config!'

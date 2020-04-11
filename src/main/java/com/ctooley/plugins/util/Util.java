@@ -36,7 +36,7 @@ public class Util
 
     public void openInventory(Player player)
     {
-        Inventory shopInventory = Bukkit.createInventory(null, config.getInt("options.inventorysize"), config.getString("options.shopname"));
+        Inventory shopInventory = Bukkit.createInventory(null, config.getInt("options.inventory-size"), config.getString("options.shop-name"));
 
         for(String spawnerKey : spawnerSection.getKeys(false)) 
         {
@@ -49,7 +49,7 @@ public class Util
             ItemMeta spawnerMeta = spawner.getItemMeta();
             spawnerMeta.setDisplayName(ChatColor.WHITE + formatSpawner(spawnerKey) + " Spawner");
             List<String> lore = new ArrayList<>();
-            lore.add(ChatColor.GREEN + "Price: " + config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(spawners.getInt("spawners." + spawnerKey + ".buy-price")));
+            lore.add(ChatColor.GREEN + "Price: " + config.getString("options.currency-sign") + NumberFormat.getNumberInstance(Locale.US).format(spawners.getInt("spawners." + spawnerKey + ".buy-price")));
             spawnerMeta.setLore(lore);
             spawner.setItemMeta(spawnerMeta);
             shopInventory.addItem(spawner);
@@ -131,20 +131,20 @@ public class Util
                 {
                     player.closeInventory();
                 }
-                sendMessage(player, true, config.getString("options.nomoney").replace("{money}", price+"").replace("{currency}", config.getString("options.currencysign")));
+                sendMessage(player, true, config.getString("options.no-money").replace("{money}", price+"").replace("{currency}", config.getString("options.currency-sign")));
                 return;
             }
-            message = config.getString("options.salemessage");
+            message = config.getString("options.sale-message");
             spawnerShop.economy.withdraw(player, price);
         }
         else
         {
-            message = config.getString("options.buymessage");
+            message = config.getString("options.buy-message");
             spawnerShop.economy.deposit(player, price);
         }
 
         giveSpawner(player, spawner);
-        sendMessage(player, true, message.replace("{currency}", config.getString("options.currencysign")).replace("{amount}", price+""));
+        sendMessage(player, true, message.replace("{currency}", config.getString("options.currency-sign")).replace("{amount}", price+""));
 
         if(inventory)
         {

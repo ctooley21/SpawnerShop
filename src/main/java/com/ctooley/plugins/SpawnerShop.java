@@ -35,7 +35,7 @@ public class SpawnerShop extends JavaPlugin
         util = new Util(this, config, spawnerFile.getConfig());
         registerListeners();
         initialiseCommands();
-        currencySign = config.getString("options.currencysign");
+        currencySign = config.getString("options.currency-sign");
         enableMetrics();
         initialiseEconomy();
     }
@@ -73,7 +73,7 @@ public class SpawnerShop extends JavaPlugin
         util = new Util(this, config, spawnerFile.getConfig());
         registerListeners();
         initialiseCommands();
-        currencySign = config.getString("options.currencysign");
+        currencySign = config.getString("options.currency-sign");
     }
 
     public void enableMetrics()

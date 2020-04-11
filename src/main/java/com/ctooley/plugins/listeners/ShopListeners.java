@@ -25,7 +25,7 @@ public class ShopListeners implements Listener {
     public ShopListeners(SpawnerShop plugin, Util util) {
         this.plugin = plugin;
         this.util = util;
-        this.inventoryTitle = ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.shopname")));
+        this.inventoryTitle = ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.shop-name")));
     }
 
     @EventHandler
@@ -39,7 +39,7 @@ public class ShopListeners implements Listener {
 
             String spawner = ChatColor.stripColor(clicked.getItemMeta().getDisplayName().replace("Spawner", "").replace(" ", ""));
             if(!player.hasPermission("spawnershop.buy." + spawner.toLowerCase()) && !player.hasPermission("spawnershop.buy.all")) {
-                util.sendMessage(player, true, plugin.config.getString("options.nopermission"));
+                util.sendMessage(player, true, plugin.config.getString("options.no-permission"));
                 return;
             }
             

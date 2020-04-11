@@ -36,7 +36,7 @@ public class SignListener implements Listener {
                 String line2 = e.getLine(1);
                 String line3 = e.getLine(2);
                 if (line2.equalsIgnoreCase("Buy")) {
-                    String price = e.getLine(3).replace(plugin.config.getString("options.currencysign"), "");
+                    String price = e.getLine(3).replace(plugin.config.getString("options.currency-sign"), "");
 
                     ConfigurationSection spawnerSection = plugin.spawnerFile.getConfig().getConfigurationSection("spawners");
                     if(spawnerSection.contains(line3.toUpperCase())) {
@@ -44,26 +44,26 @@ public class SignListener implements Listener {
 
                         if (util.isInt(price)) {
                             int price1 = Integer.parseInt(price);
-                            e.setLine(3, plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(price1));
+                            e.setLine(3, plugin.config.getString("options.currency-sign") + NumberFormat.getNumberInstance(Locale.US).format(price1));
                         } else {
-                            p.sendMessage("You have either not entered a price, or entered one incorrectly. The price has been set to the one specified in the config!");
-                            e.setLine(3, plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(spawnerSection.getInt(line3.toUpperCase() + ".buy-price")));
+                            util.sendMessage(p, true, plugin.config.getString("options.invalid-price"));
+                            e.setLine(3, plugin.config.getString("options.currency-sign") + NumberFormat.getNumberInstance(Locale.US).format(spawnerSection.getInt(line3.toUpperCase() + ".buy-price")));
                         }
                     } else {
                         sendFormatMessage(e);
                     }
                 } else if(line2.equalsIgnoreCase("Sell")) {
                     String price = e.getLine(3);
-                    ConfigurationSection spawnerSection = plugin.config.getConfigurationSection("spawners");
+                    ConfigurationSection spawnerSection = plugin.spawnerFile.getConfig().getConfigurationSection("spawners");
                     if(spawnerSection.contains(line3.toUpperCase())) {
                         e.setLine(0, ChatColor.BLUE + "[SpawnerShop]");
 
                         if (util.isInt(price)) {
                             int price1 = Integer.parseInt(price);
-                            e.setLine(3, plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(price1));
+                            e.setLine(3, plugin.config.getString("options.currency-sign") + NumberFormat.getNumberInstance(Locale.US).format(price1));
                         } else {
-                            p.sendMessage("You have either not entered a price, or entered one incorrectly. The price has been set to the one specified in the config!");
-                            e.setLine(3, plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(plugin.getConfig().getInt("spawners." + line3 + ".sell-price")));
+                            util.sendMessage(p, true, plugin.config.getString("options.invalid-price"));
+                            e.setLine(3, plugin.config.getString("options.currency-sign") + NumberFormat.getNumberInstance(Locale.US).format(plugin.getConfig().getInt("spawners." + line3 + ".sell-price")));
                         }
                     } else {
                         sendFormatMessage(e);
@@ -72,7 +72,7 @@ public class SignListener implements Listener {
                    sendFormatMessage(e);
                 }
             } else {
-                util.sendMessage(p, true, plugin.config.getString("options.nopermission"));
+                util.sendMessage(p, true, plugin.config.getString("options.no-permission"));
             }
         }
     }
@@ -93,19 +93,20 @@ public class SignListener implements Listener {
 
         if ((!p.hasPermission("spawnershop.signs.use")) && !p.isOp()) 
         {
-            util.sendMessage(p, true, plugin.config.getString("options.nopermission"));
+            util.sendMessage(p, true, plugin.config.getString("options.no-permission"));
             return;
         }
 
         String spawner = sign.getSpawnerType();
         String method = sign.getMethod();
+        int price = sign.getPrice();
+
         if(!p.hasPermission("spawnershop." + method + "." + spawner.toLowerCase()) && !p.hasPermission("spawnershop." + method + ".all")) 
         {
-            util.sendMessage(p, true, plugin.config.getString("options.nopermission"));
+            util.sendMessage(p, true, plugin.config.getString("options.no-permission"));
             return;
         }
         
-        int price = sign.getPrice();
         if (method.equalsIgnoreCase("Buy"))
         {
             util.handleSale(p, true, false, spawner, price);
