@@ -3,179 +3,143 @@ spawners:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 58
   BLAZE:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 61
   SKELETON:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 51
   ZOMBIE:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 54
   CREEPER:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 50
   CAVE_SPIDER:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 59
   SPIDER:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 52
   WOLF:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 95
   CHICKEN:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 93
   COW:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 92
   PIG:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 90
   OCELOT:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 98
   MOOSHROOM:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 96
   SHEEP:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 91
   BAT:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 65
   RABBIT:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 101
   SQUID:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 94
   VILLAGER:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 120
   ZOMBIE_PIGMAN:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 57
   SILVERFISH:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 60
   SLIME:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 55
   HORSE:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 100
   WITCH:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 66
   MAGMA_CUBE:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 62
   POLAR_BEAR:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 102
   ENDERMITE:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 67
   EVOKER:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 34
   GUARDIAN:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 68
   SHULKER:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 69
   HUSK:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 23
   STRAY:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 6
   VEX:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 35
   VINDICATOR:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 36
   LLAMA:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 103
   MULE:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 32
   PARROT:
     enabled: true
     buy-price: 100000
     sell-price: 10000
-    data-value: 105
