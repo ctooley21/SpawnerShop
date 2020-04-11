@@ -4,214 +4,178 @@ spawners:
     buy-price: 100000
     sell-price: 10000
     data-value: 58
-    entity-type: 'ENDERMAN'
   BLAZE:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 61
-    entity-type: 'BLAZE'
   SKELETON:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 51
-    entity-type: 'SKELETON'
   ZOMBIE:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 54
-    entity-type: 'ZOMBIE'
   CREEPER:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 50
-    entity-type: 'CREEPER'
   CAVE_SPIDER:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 59
-    entity-type: 'CAVE_SPIDER'
   SPIDER:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 52
-    entity-type: 'SPIDER'
   WOLF:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 95
-    entity-type: 'WOLF'
   CHICKEN:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 93
-    entity-type: 'CHICKEN'
   COW:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 92
-    entity-type: 'COW'
   PIG:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 90
-    entity-type: 'PIG'
   OCELOT:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 98
-    entity-type: 'OCELOT'
   MOOSHROOM:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 96
-    entity-type: 'MUSHROOM_COW'
   SHEEP:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 91
-    entity-type: 'SHEEP'
   BAT:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 65
-    entity-type: 'BAT'
   RABBIT:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 101
-    entity-type: 'RABBIT'
   SQUID:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 94
-    entity-type: 'SQUID'
   VILLAGER:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 120
-    entity-type: 'VILLAGER'
   ZOMBIE_PIGMAN:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 57
-    entity-type: 'PIG_ZOMBIE'
   SILVERFISH:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 60
-    entity-type: 'SILVERFISH'
   SLIME:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 55
-    entity-type: 'SLIME'
   HORSE:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 100
-    entity-type: 'HORSE'
   WITCH:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 66
-    entity-type: 'WITCH'
   MAGMA_CUBE:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 62
-    entity-type: 'MAGMA_CUBE'
   POLAR_BEAR:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 102
-    entity-type: 'POLAR_BEAR'
   ENDERMITE:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 67
-    entity-type: 'ENDERMITE'
   EVOKER:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 34
-    entity-type: 'EVOKER'
   GUARDIAN:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 68
-    entity-type: 'GUARDIAN'
   SHULKER:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 69
-    entity-type: 'SHULKER'
   HUSK:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 23
-    entity-type: 'HUSK'
   STRAY:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 6
-    entity-type: 'STRAY'
   VEX:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 35
-    entity-type: 'VEX'
   VINDICATOR:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 36
-    entity-type: 'VINDICATOR'
   LLAMA:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 103
-    entity-type: 'LLAMA'
   MULE:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 32
-    entity-type: 'MULE'
   PARROT:
     enabled: true
     buy-price: 100000
     sell-price: 10000
     data-value: 105
-    entity-type: 'PARROT'
