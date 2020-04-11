@@ -20,38 +20,30 @@ public class ShopListeners implements Listener {
 
     private final SpawnerShop plugin;
     private final Util util;
+    private String inventoryTitle;
 
     public ShopListeners(SpawnerShop plugin, Util util) {
         this.plugin = plugin;
         this.util = util;
+        this.inventoryTitle = ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.shopname")));
     }
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
         ItemStack clicked = event.getCurrentItem();
-        String error = ChatColor.RED + "Error:" + ChatColor.DARK_RED + " You do not have sufficient funds.";
-        if (ChatColor.stripColor(event.getView().getTitle()).equalsIgnoreCase(ChatColor.stripColor(
-                ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("options.shopname"))
-        ))) {
+        if (ChatColor.stripColor(event.getView().getTitle()).equalsIgnoreCase(inventoryTitle))
+        {
             event.setCancelled(true);
-            if ((clicked == null) || (clicked.getType() == Material.AIR)) {
-                return;
-            }
+            if ((clicked == null) || (clicked.getType() == Material.AIR)) return;
+
             String spawner = ChatColor.stripColor(clicked.getItemMeta().getDisplayName().replace("Spawner", "").replace(" ", ""));
             if(!player.hasPermission("spawnershop.buy." + spawner.toLowerCase()) && !player.hasPermission("spawnershop.buy.all")) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.prefix")) + " " + ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.nopermission")));
+                util.sendMessage(player, true, plugin.config.getString("options.nopermission"));
                 return;
             }
-            if(plugin.economy.getBalance(player) >= plugin.spawnerFile.getConfig().getInt("spawners." + spawner.toUpperCase().replace(" ", "_") + ".buy-price")) {
-                util.handleSale(player, true, spawner);
-                util.giveSpawner(player, spawner);
-                player.closeInventory();
-                plugin.cooldown.put(player.getName(), System.currentTimeMillis());
-            }else {
-                player.closeInventory();
-                player.sendMessage(error);
-            }
+            
+            util.handleSale(player, true, true, spawner);
         }
     }
 
