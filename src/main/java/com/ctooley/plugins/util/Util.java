@@ -115,7 +115,7 @@ public class Util
         }
         else
         {
-            handleSale(player, withdraw, inventory, spawner,  spawners.getInt("spawners." + spawnerPath + ".sale-price"));
+            handleSale(player, withdraw, inventory, spawner,  spawners.getInt("spawners." + spawnerPath + ".sell-price"));
         }
     }
 
