@@ -108,15 +108,7 @@ public class SignListener implements Listener {
         int price = sign.getPrice();
         if (method.equalsIgnoreCase("Buy"))
         {
-            if(plugin.economy.getBalance(p) >= price) {
-                plugin.economy.withdraw(p, price);
-                util.giveSpawner(p, spawner);
-                p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(price) + " has been taken from your account.");
-            }
-            else 
-            {
-                util.sendMessage(p, true, plugin.config.getString("options.nomoney"));
-            }
+            util.handleSale(p, true, false, spawner, price);
         }
         else 
         {
@@ -130,9 +122,7 @@ public class SignListener implements Listener {
                     {
                         if(ChatColor.stripColor(name).replace(" Spawner","").equalsIgnoreCase(spawner)) 
                         {
-                            p.getInventory().getItemInMainHand().setAmount(p.getInventory().getItemInMainHand().getAmount()-1);
-                            plugin.economy.deposit(p, price);
-                            p.sendMessage(ChatColor.GREEN + plugin.config.getString("options.currencysign") + NumberFormat.getNumberInstance(Locale.US).format(price) + " has been deposited into your account.");
+                            util.handleSale(p, false, false, spawner, price);
                         }
                     }
                 }

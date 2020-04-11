@@ -9,6 +9,6 @@ options:
   currencysign: $
   reloadsuccess: '&9You have successfully reloaded the plugin.'
   prefix: '&7[&cSS&7]'
-  nomoney: '&9You do not have enough funds!'
+  nomoney: '&9You do not have the {currency}{money} required to purchase that!'
   salemessage: '&9{currency}{amount} has been taken from your account.'
   buymessage: '&9{currency}{amount} has been deposited into your account.'

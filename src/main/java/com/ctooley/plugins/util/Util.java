@@ -106,25 +106,50 @@ public class Util
         return material.name().toLowerCase().contains("sign");
     }
 
-    public void handleSale(Player player, boolean sale, String spawner)
-    {   
-        String message;
+    public void handleSale(Player player, boolean withdraw, boolean inventory, String spawner)
+    {
         String spawnerPath = spawner.toUpperCase().replace(" ", "_");
-        int price;
-
-        if(sale)
+        if(withdraw)
         {
+            handleSale(player, withdraw, inventory, spawner,  spawners.getInt("spawners." + spawnerPath + ".buy-price"));
+        }
+        else
+        {
+            handleSale(player, withdraw, inventory, spawner,  spawners.getInt("spawners." + spawnerPath + ".sale-price"));
+        }
+    }
+
+    public void handleSale(Player player, boolean withdraw, boolean inventory, String spawner, int price)
+    {
+        String message;
+
+        if(withdraw)
+        {
+            if(spawnerShop.economy.getBalance(player) < price)
+            {
+                if(inventory)
+                {
+                    player.closeInventory();
+                }
+                sendMessage(player, true, config.getString("options.nomoney").replace("{money}", price+"").replace("{currency}", config.getString("options.currencysign")));
+                return;
+            }
             message = config.getString("options.salemessage");
-            price = spawners.getInt("spawners." + spawnerPath + ".buy-price");
             spawnerShop.economy.withdraw(player, price);
         }
         else
         {
             message = config.getString("options.buymessage");
-            price = spawners.getInt("spawners." + spawnerPath + ".sale-price");
             spawnerShop.economy.deposit(player, price);
         }
 
-        sendMessage(player, false, message.replace("{currency}", config.getString("options.currencysign")).replace("{amount}", price+""));
+        giveSpawner(player, spawner);
+        sendMessage(player, true, message.replace("{currency}", config.getString("options.currencysign")).replace("{amount}", price+""));
+
+        if(inventory)
+        {
+            player.closeInventory();
+            spawnerShop.cooldown.put(player.getName(), System.currentTimeMillis());
+        }
     }
 }
