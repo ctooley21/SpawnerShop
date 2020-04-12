@@ -4,7 +4,6 @@ import com.ctooley.plugins.SpawnerShop;
 import com.ctooley.plugins.util.ShopSign;
 import com.ctooley.plugins.util.Util;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
