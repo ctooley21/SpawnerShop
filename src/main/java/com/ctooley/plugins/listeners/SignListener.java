@@ -31,39 +31,39 @@ public class SignListener implements Listener {
     @EventHandler
     public void onSignPlacement(SignChangeEvent e) {
         Player p = e.getPlayer();
-        if (e.getLine(0).equals("[SpawnerShop]")) {
+        if (e.getLine(0).equals(ChatColor.stripColor(util.translateColors(plugin.config.getString("options.sign-title"))))) {
             if ((p.hasPermission("spawnershop.signs.create")) || p.isOp()) {
-                String line2 = e.getLine(1);
-                String line3 = e.getLine(2);
-                if (line2.equalsIgnoreCase("Buy")) {
+                String method = e.getLine(1);
+                String spawnerType = e.getLine(2);
+                if (method.equalsIgnoreCase("Buy")) {
                     String price = e.getLine(3).replace(plugin.config.getString("options.currency-sign"), "");
 
                     ConfigurationSection spawnerSection = plugin.spawnerFile.getConfig().getConfigurationSection("spawners");
-                    if(spawnerSection.contains(line3.toUpperCase())) {
-                        e.setLine(0, ChatColor.BLUE + "[SpawnerShop]");
+                    if(spawnerSection.contains(spawnerType.toUpperCase())) {
+                        e.setLine(0, util.translateColors(plugin.config.getString("options.sign-title")));
 
                         if (util.isInt(price)) {
                             int price1 = Integer.parseInt(price);
                             e.setLine(3, plugin.config.getString("options.currency-sign") + NumberFormat.getNumberInstance(Locale.US).format(price1));
                         } else {
                             util.sendMessage(p, true, plugin.config.getString("options.invalid-price"));
-                            e.setLine(3, plugin.config.getString("options.currency-sign") + NumberFormat.getNumberInstance(Locale.US).format(spawnerSection.getInt(line3.toUpperCase() + ".buy-price")));
+                            e.setLine(3, plugin.config.getString("options.currency-sign") + NumberFormat.getNumberInstance(Locale.US).format(spawnerSection.getInt(spawnerType.toUpperCase() + ".buy-price")));
                         }
                     } else {
                         sendFormatMessage(e);
                     }
-                } else if(line2.equalsIgnoreCase("Sell")) {
+                } else if(method.equalsIgnoreCase("Sell")) {
                     String price = e.getLine(3);
                     ConfigurationSection spawnerSection = plugin.spawnerFile.getConfig().getConfigurationSection("spawners");
-                    if(spawnerSection.contains(line3.toUpperCase())) {
-                        e.setLine(0, ChatColor.BLUE + "[SpawnerShop]");
+                    if(spawnerSection.contains(spawnerType.toUpperCase())) {
+                        e.setLine(0, util.translateColors(plugin.config.getString("options.sign-title")));
 
                         if (util.isInt(price)) {
                             int price1 = Integer.parseInt(price);
                             e.setLine(3, plugin.config.getString("options.currency-sign") + NumberFormat.getNumberInstance(Locale.US).format(price1));
                         } else {
                             util.sendMessage(p, true, plugin.config.getString("options.invalid-price"));
-                            e.setLine(3, plugin.config.getString("options.currency-sign") + NumberFormat.getNumberInstance(Locale.US).format(plugin.getConfig().getInt("spawners." + line3 + ".sell-price")));
+                            e.setLine(3, plugin.config.getString("options.currency-sign") + NumberFormat.getNumberInstance(Locale.US).format(plugin.getConfig().getInt("spawners." + spawnerType + ".sell-price")));
                         }
                     } else {
                         sendFormatMessage(e);
@@ -88,7 +88,7 @@ public class SignListener implements Listener {
         boolean isSign = util.isSign(e.getClickedBlock().getType());
         if ((e.getAction() != Action.RIGHT_CLICK_BLOCK) || !isSign) return;
 
-        ShopSign sign = new ShopSign((Sign) e.getClickedBlock().getState());
+        ShopSign sign = new ShopSign((Sign) e.getClickedBlock().getState(), plugin);
         if (!sign.isValid()) return;
 
         if ((!p.hasPermission("spawnershop.signs.use")) && !p.isOp()) 

@@ -2,7 +2,6 @@ package com.ctooley.plugins.util;
 
 import com.ctooley.plugins.SpawnerShop;
 
-import org.bukkit.ChatColor;
 import org.bukkit.block.Sign;
 
 public class ShopSign 
@@ -12,9 +11,9 @@ public class ShopSign
     private String method;
     private boolean valid;
 
-    public ShopSign(Sign sign)
+    public ShopSign(Sign sign, SpawnerShop spawnerShop)
     {
-        valid = sign.getLine(0).equalsIgnoreCase(ChatColor.BLUE + "[SpawnerShop]");
+        valid = sign.getLine(0).equalsIgnoreCase(spawnerShop.util.translateColors(spawnerShop.config.getString("options.sign-title")));
         spawnerType = sign.getLine(2).toLowerCase();
         method = sign.getLine(1).toLowerCase();
         setPrice(sign.getLine(3));

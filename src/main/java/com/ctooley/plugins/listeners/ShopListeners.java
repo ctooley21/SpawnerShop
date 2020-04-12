@@ -25,7 +25,7 @@ public class ShopListeners implements Listener {
     public ShopListeners(SpawnerShop plugin, Util util) {
         this.plugin = plugin;
         this.util = util;
-        this.inventoryTitle = ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.shop-name")));
+        this.inventoryTitle = ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', plugin.config.getString("options.inventory-title")));
     }
 
     @EventHandler
