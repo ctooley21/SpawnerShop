@@ -36,7 +36,7 @@ public class Util
 
     public void openInventory(Player player)
     {
-        Inventory shopInventory = Bukkit.createInventory(null, config.getInt("options.inventory-size"), config.getString("options.shop-name"));
+        Inventory shopInventory = Bukkit.createInventory(null, config.getInt("options.inventory-size"), config.getString("options.inventory-title"));
 
         for(String spawnerKey : spawnerSection.getKeys(false)) 
         {

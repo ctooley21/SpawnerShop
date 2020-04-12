@@ -14,15 +14,18 @@ import com.ctooley.plugins.util.Util;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class SpawnerShop extends JavaPlugin 
 {
 
     public ShopEconomy economy = null;
-    private Util util;
+    public Util util;
     public Logger logger;
     public SpawnerFile spawnerFile;
+    private ShopListeners shopListeners;
+    private SignListener signListener;
 
     public HashMap<String, Long> cooldown = new HashMap<>();
     public static String currencySign;
@@ -61,8 +64,17 @@ public class SpawnerShop extends JavaPlugin
     
     private void registerListeners()
     {
-        Bukkit.getServer().getPluginManager().registerEvents(new SignListener(this, util), this);
-        Bukkit.getServer().getPluginManager().registerEvents(new ShopListeners(this, util), this);
+        shopListeners = new ShopListeners(this, util);
+        signListener = new SignListener(this, util);
+        Bukkit.getServer().getPluginManager().registerEvents(shopListeners, this);
+        Bukkit.getServer().getPluginManager().registerEvents(signListener, this);
+    }
+
+    private void unregisterListeners()
+    {
+        shopListeners = null;
+        signListener = null;
+        HandlerList.unregisterAll(this);
     }
 
     public void reload()
@@ -71,6 +83,7 @@ public class SpawnerShop extends JavaPlugin
         config = getConfig();
         spawnerFile = new SpawnerFile(this);
         util = new Util(this, config, spawnerFile.getConfig());
+        unregisterListeners();
         registerListeners();
         initialiseCommands();
         currencySign = config.getString("options.currency-sign");

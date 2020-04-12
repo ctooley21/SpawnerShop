@@ -1,5 +1,6 @@
 options:
-  shop-name: Spawner Shop
+  inventory-title: Spawner Shop
+  sign-title: '&9[SpawnerShop]'
   open-message: '&9Opening the shop inventory.'
   sign-success: '&9You have sucessfully created a SpawnerShop sign!'
   inventory-size: 54
