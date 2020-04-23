@@ -15,3 +15,4 @@ options:
   buy-message: '&9{currency}{amount} has been deposited into your account.'
   no-spawner-selected: '&9Please choose a spawner type!'
   invalid-price: '&9You have either not entered a price, or entered one incorrectly. The price has been set to the one specified in the config!'
+  language: 'ENG'
