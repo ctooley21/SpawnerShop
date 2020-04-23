@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -37,13 +38,28 @@ public class ShopListeners implements Listener {
             event.setCancelled(true);
             if ((clicked == null) || (clicked.getType() == Material.AIR)) return;
 
+            String method = "";
+
+            if(event.getClick() == ClickType.RIGHT)
+            {
+                method = "sell";
+            }
+            else if(event.getClick() == ClickType.LEFT)
+            {
+                method = "buy";
+            }
+            else
+            {
+                return;
+            }
+
             String spawner = ChatColor.stripColor(clicked.getItemMeta().getDisplayName().replace("Spawner", "").replace(" ", ""));
-            if(!player.hasPermission("spawnershop.buy." + spawner.toLowerCase()) && !player.hasPermission("spawnershop.buy.all")) {
+            if(!player.hasPermission("spawnershop." + method + "." + spawner.toLowerCase()) && !player.hasPermission("spawnershop." + method + ".all")) {
                 util.sendMessage(player, true, plugin.config.getString("options.no-permission"));
                 return;
             }
             
-            util.handleSale(player, true, true, spawner);
+            util.handleSale(player, method == "buy", true, spawner);
         }
     }
 

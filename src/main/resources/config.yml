@@ -14,5 +14,6 @@ options:
   sale-message: '&9{currency}{amount} has been taken from your account.'
   buy-message: '&9{currency}{amount} has been deposited into your account.'
   no-spawner-selected: '&9Please choose a spawner type!'
+  no-spawner-sell: '&9You do not have a {spawner} Spawner to sell.'
   invalid-price: '&9You have either not entered a price, or entered one incorrectly. The price has been set to the one specified in the config!'
   language: 'ENG'

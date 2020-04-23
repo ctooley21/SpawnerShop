@@ -2,6 +2,7 @@ package com.ctooley.plugins.util;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -136,14 +137,25 @@ public class Util
             }
             message = config.getString("options.sale-message");
             spawnerShop.economy.withdraw(player, price);
+            giveSpawner(player, spawner);
         }
         else
         {
+            if(!takeSpawner(player, spawner))
+            {
+                if(inventory)
+                {
+                    player.closeInventory();
+                }
+                sendMessage(player, true, config.getString("options.no-spawner-sell").replace("{spawner}", capFirst(spawner)));
+                return;
+            }
+            
+
             message = config.getString("options.buy-message");
             spawnerShop.economy.deposit(player, price);
         }
 
-        giveSpawner(player, spawner);
         sendMessage(player, true, message.replace("{currency}", config.getString("options.currency-sign")).replace("{amount}", price+""));
 
         if(inventory)
@@ -151,5 +163,51 @@ public class Util
             player.closeInventory();
             spawnerShop.cooldown.put(player.getName(), System.currentTimeMillis());
         }
+    }
+
+    public boolean takeSpawner(Player player, String spawner)
+    {  
+        HashMap<Integer, ? extends ItemStack> spawners = player.getInventory().all(Material.SPAWNER);
+        for(int index : spawners.keySet())
+        {
+            ItemStack item = player.getInventory().getItem(index);
+            if(item == null) continue;
+            if(item.getType() != Material.SPAWNER) continue;
+            if(!item.hasItemMeta() || !item.getItemMeta().hasDisplayName()) continue;
+            String name = item.getItemMeta().getDisplayName();
+            if(name.contains(spawner))//future point need to check nbt data here
+            {
+                if(ChatColor.stripColor(name).replace(" Spawner","").equalsIgnoreCase(spawner)) 
+                {
+                    item.setAmount(item.getAmount() - 1);
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public boolean consumeItem(Player player, int count) {
+        HashMap<Integer, ? extends ItemStack> spawners = player.getInventory().all(Material.SPAWNER);
+    
+        for (Integer index : spawners.keySet()) 
+        {
+            ItemStack stack = spawners.get(index);
+    
+            int removed = Math.min(count, stack.getAmount());
+            count -= removed;
+    
+            if (stack.getAmount() == removed)
+                player.getInventory().setItem(index, null);
+            else
+                stack.setAmount(stack.getAmount() - removed);
+    
+            if (count <= 0)
+                break;
+        }
+    
+        player.updateInventory();
+        return true;
     }
 }
