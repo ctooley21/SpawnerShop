@@ -44,10 +44,10 @@ public class SignListener implements Listener {
 
                         if (util.isInt(price)) {
                             int price1 = Integer.parseInt(price);
-                            e.setLine(3, plugin.config.getString("options.currency-sign") + NumberFormat.getNumberInstance(Locale.US).format(price1));
+                            e.setLine(3, plugin.config.getString("options.currency-sign") + NumberFormat.getNumberInstance(Locale.forLanguageTag(plugin.config.getString("options.language"))).format(price1));
                         } else {
                             util.sendMessage(p, true, plugin.config.getString("options.invalid-price"));
-                            e.setLine(3, plugin.config.getString("options.currency-sign") + NumberFormat.getNumberInstance(Locale.US).format(spawnerSection.getInt(spawnerType.toUpperCase() + ".buy-price")));
+                            e.setLine(3, plugin.config.getString("options.currency-sign") + NumberFormat.getNumberInstance(Locale.forLanguageTag(plugin.config.getString("options.language"))).format(spawnerSection.getInt(spawnerType.toUpperCase() + ".buy-price")));
                         }
                     } else {
                         sendFormatMessage(e);
@@ -60,10 +60,10 @@ public class SignListener implements Listener {
 
                         if (util.isInt(price)) {
                             int price1 = Integer.parseInt(price);
-                            e.setLine(3, plugin.config.getString("options.currency-sign") + NumberFormat.getNumberInstance(Locale.US).format(price1));
+                            e.setLine(3, plugin.config.getString("options.currency-sign") + NumberFormat.getNumberInstance(Locale.forLanguageTag(plugin.config.getString("options.language"))).format(price1));
                         } else {
                             util.sendMessage(p, true, plugin.config.getString("options.invalid-price"));
-                            e.setLine(3, plugin.config.getString("options.currency-sign") + NumberFormat.getNumberInstance(Locale.US).format(plugin.getConfig().getInt("spawners." + spawnerType + ".sell-price")));
+                            e.setLine(3, plugin.config.getString("options.currency-sign") + NumberFormat.getNumberInstance(Locale.forLanguageTag(plugin.config.getString("options.language"))).format(plugin.getConfig().getInt("spawners." + spawnerType + ".sell-price")));
                         }
                     } else {
                         sendFormatMessage(e);

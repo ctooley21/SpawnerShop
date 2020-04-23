@@ -49,7 +49,7 @@ public class Util
             ItemMeta spawnerMeta = spawner.getItemMeta();
             spawnerMeta.setDisplayName(ChatColor.WHITE + formatSpawner(spawnerKey) + " Spawner");
             List<String> lore = new ArrayList<>();
-            lore.add(ChatColor.GREEN + "Price: " + config.getString("options.currency-sign") + NumberFormat.getNumberInstance(Locale.US).format(spawners.getInt("spawners." + spawnerKey + ".buy-price")));
+            lore.add(ChatColor.GREEN + "Price: " + config.getString("options.currency-sign") + NumberFormat.getNumberInstance(Locale.forLanguageTag(config.getString("options.language"))).format(spawners.getInt("spawners." + spawnerKey + ".buy-price")));
             spawnerMeta.setLore(lore);
             spawner.setItemMeta(spawnerMeta);
             shopInventory.addItem(spawner);
