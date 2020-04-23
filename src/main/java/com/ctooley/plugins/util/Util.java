@@ -187,27 +187,4 @@ public class Util
 
         return false;
     }
-
-    public boolean consumeItem(Player player, int count) {
-        HashMap<Integer, ? extends ItemStack> spawners = player.getInventory().all(Material.SPAWNER);
-    
-        for (Integer index : spawners.keySet()) 
-        {
-            ItemStack stack = spawners.get(index);
-    
-            int removed = Math.min(count, stack.getAmount());
-            count -= removed;
-    
-            if (stack.getAmount() == removed)
-                player.getInventory().setItem(index, null);
-            else
-                stack.setAmount(stack.getAmount() - removed);
-    
-            if (count <= 0)
-                break;
-        }
-    
-        player.updateInventory();
-        return true;
-    }
 }
